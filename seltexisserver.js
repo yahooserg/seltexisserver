@@ -60,7 +60,17 @@
     app.get('/api/test', function (req, res) {
 
 
-      res.send(JSON.stringify({first:"no", second: "yeah"}));
+      var query = "SELECT * FROM inventory WHERE id = 1",
+          connection = mysql.createConnection(mysqlConnection);
+
+      connection.connect();
+
+      connection.query(query, function (err, rows, fields) {
+          res.send(rows);
+          // res.send(JSON.stringify({first:"no", second: "yeah"}));
+      });
+
+      connection.end();
     });
 
     app.post('/api/log/user/:id/action/:action', function (req, res) {
