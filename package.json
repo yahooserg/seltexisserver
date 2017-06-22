@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/yahooserg/seltexisserver/issues"
   },
-  "homepage": "https://github.com/yahooserg/seltexisserver#readme"
+  "homepage": "https://github.com/yahooserg/seltexisserver#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "mysql": "^2.13.0"
+  }
 }
