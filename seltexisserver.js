@@ -60,7 +60,7 @@
     app.get('/api/test', function (req, res) {
 
 
-      res.send(JSON.stringify({abc:"def", second: "yeah"}));
+      res.send(JSON.stringify({first:"no", second: "yeah"}));
     });
 
     app.post('/api/log/user/:id/action/:action', function (req, res) {
