@@ -9,7 +9,7 @@
         // cookieParser = require('cookie-parser'),
         app = express(),
         mysql = require('mysql'),
-        mysqlConnection = require(__dirname + '/../dbconnectmysqlnode.js'),
+        mysqlConnection = require(__dirname + '/../seltexisdbconfig/dbconnectmysqlnode.js'),
         myFunctions = require('./myfunctions'),
         getTimeString = myFunctions.getTimeString,
         getDateString = myFunctions.getDateString,
@@ -41,7 +41,7 @@
 
 
     app.use(function (req, res, next) {
-        var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net'],
+        var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200'],
             origin = req.headers.origin;
         if (allowedOrigins.indexOf(origin) > -1) {
             res.setHeader('Access-Control-Allow-Origin', origin);
@@ -55,6 +55,12 @@
     app.get('/api/storedata/store/:id/date/:date', function (req, res) {
 
 
+    });
+
+    app.get('/api/test', function (req, res) {
+
+
+      res.send(JSON.stringify({abc:"def", second: "yeah"}));
     });
 
     app.post('/api/log/user/:id/action/:action', function (req, res) {
