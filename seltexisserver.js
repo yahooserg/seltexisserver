@@ -67,7 +67,7 @@
 
       connection.query(query, function (err, rows, fields) {
         console.log(err);
-          res.send(rows);
+          res.send(JSON.stringify(rows));
           // res.send(JSON.stringify({first:"no", second: "yeah"}));
       });
 
