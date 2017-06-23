@@ -39,6 +39,10 @@
     console.log('start');
   });
 
+  app.use('/assets', express.static(__dirname + '/public'));
+
+  app.set('view engine', 'ejs');
+
 
   app.use(function (req, res, next) {
     var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
@@ -71,6 +75,13 @@
     });
 
     connection.end();
+  });
+
+  app.get('/catalog/:partId', function (req, res) {
+
+
+    res.render('index');
+
   });
 
   app.post('/api/log/user/:id/action/:action', function (req, res) {
