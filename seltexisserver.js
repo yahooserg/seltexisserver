@@ -1,26 +1,26 @@
-/*jslint nomen: true, node: true, unparam: true*/
+/*jslint nomen: true, node: true, unparam: true, white: true*/
 (function () {
   "use strict";
   // var test = require('./test');
   // console.log(test);
-  //     return;
+  // return;
 
   var express = require('express'),
-  // cookieParser = require('cookie-parser'),
-  app = express(),
-  mysql = require('mysql'),
-  mysqlConnection = require(__dirname + '/../seltexisdbconfig/dbconnectmysqlnode.js'),
-  myFunctions = require('./myfunctions'),
-  getTimeString = myFunctions.getTimeString,
-  getDateString = myFunctions.getDateString,
-  // https = require('https'),
-  // fs = require('fs'),
-  // privateKey,
-  // certificate,
-  // credentials,
-  // httpsServer;
-  http,
-  httpServer;
+    // cookieParser = require('cookie-parser'),
+    app = express(),
+    mysql = require('mysql'),
+    mysqlConnection = require(__dirname + '/../seltexisserverconfig/dbconnectmysqlnode.js'),
+    // myFunctions = require('./myfunctions'),
+    // getTimeString = myFunctions.getTimeString,
+    // getDateString = myFunctions.getDateString,
+    // https = require('https'),
+    // fs = require('fs'),
+    // privateKey,
+    // certificate,
+    // credentials,
+    // httpsServer;
+    http,
+    httpServer;
 
   //UNCOMMENT FOR production
   //
@@ -43,7 +43,6 @@
 
   app.set('view engine', 'ejs');
 
-
   app.use(function (req, res, next) {
     var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
     origin = req.headers.origin;
@@ -56,46 +55,18 @@
     next();
   });
 
-  app.get('/api/storedata/store/:id/date/:date', function (req, res) {
-
-
-  });
-
-  app.get('/api/test', function (req, res) {
-
-
-    var query = "SELECT * FROM inventory WHERE id = 1",
-    connection = mysql.createConnection(mysqlConnection);
-
-    connection.connect();
-
-    connection.query(query, function (err, rows, fields) {
-      res.send(JSON.stringify(rows[0]));
-      // res.send(JSON.stringify({first:"no", second: "yeah"}));
-    });
-
-    connection.end();
-  });
-
   app.get('/catalog/:partId', function (req, res) {
 
-
-    res.render('index');
-
-  });
-
-  app.post('/api/log/user/:id/action/:action', function (req, res) {
-
-    var query = "call addLog(" + req.params.id + ", '" + req.params.action + "')",
-    connection = mysql.createConnection(mysqlConnection);
+    var query = "SELECT * FROM inventory WHERE id = " + req.params.partId,
+      connection = mysql.createConnection(mysqlConnection);
 
     connection.connect();
 
     connection.query(query, function (err, rows, fields) {
-      res.send('OK');
+      console.log(rows[0]);
+      res.render('index', {part: rows[0]});
     });
 
-    connection.end();
   });
 
 }());

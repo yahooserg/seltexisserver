@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Seltex - CAT, Cummins, Detroit Diesel - Запчасти американских грузовиков - Грузовые запчасти из США - Запчасти Freightliner, Peterbilt, Kenworth, Volvo, CAT, Cummins. Запчасти Кат. Катерпиллер. </title>
-    <meta name="description" content="Запчасти Caterpillar, Cummins, Detroit Diesel - Американские грузовые запчасти - Запчасти американских грузовиков - Грузовые запчасти из США - Запчасти Freightliner, Peterbilt, Kenworth, Volvo - Запчасти грузовиков США - Запчасти американских двигателей - Запчасти из Америки для грузовиков и грузовых двигателей - Запчасти Кат - Запчасти Катерпиллер">
-    <meta name="keywords" content="Запчасти Caterpillar, запчасти Cat, запчасти грузовиков сша, запчасти американских грузовиков, запчасти Cummins,  запчасти DD, запчасти Detroit Diesel, Volvo, cat, caterpillar, Freightliner, Volvo, Peterbilt, Kenworth, Mack, International, Sterling, турбины, двигатели, запчасти двигателей, cелтекс, сэлтекс, селтикс, сэлтэкс, сэлтикс, seltex, Seltex, SELTEX, Кат, Катерпиллер, Катерпиллар, Катерпилар, Катерпилер">
+    <title><%= part.description %> на сайте www.seltex.ru</title>
+    <meta name="description" content="<%= part.description %>">
+    <meta name="keywords" content="<%= part.description %>">
     <meta name="author" content="Seltex, Inc">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -81,20 +81,8 @@
     <div class="navbar-space"></div>
     <div class="navbar-space"></div>
     <div class="col-xs-12">
-        <div class="container" style="margin-top:30px;">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <p class="text-muted">По фразе <span style="color:red"></span> найдено результатов: <span style="color:red"><?=sizeof($parts);?></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <section  class="">
-            <table class = "table table-condensed">
-                <tr><th class="">#</th><th>Наименование детали</th><th class="col-xs-1">Цена, <i class="fa fa-rub fa-fw" style="font-size:12px;"></i></th><th class="col-xs-1">На складе</th><th class="col-xs-1">В пути</th></tr>
-
-
-            </table>
+        <section  class="my-part-description">
+            <h1> <%= part.description %> </h1>
         </section>
     </div>
     <div class="tooltip">Hover over me
@@ -217,18 +205,6 @@
                         </li>
                     </ul>
                     <br>
-
-                    <!--
-                    <ul class="list-inline">
-                    <li>
-                    <a href="#"><i class="fa fa-vk fa-fw fa-3x"></i></a>
-                </li>
-                <li>
-                <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-            </li>
-        </ul>
-    -->
-
     <hr class="small">
     <p class="text-muted">Copyright &copy; www.seltex.ru 2016</p>
 </div>

@@ -35,6 +35,17 @@ h6 {
     src: url(../fonts/bitstreamverabd.ttf);
 }
 
+.my-part-description {
+
+}
+
+.my-part-description h1 {
+  color: gray;
+  font-size: 22px;
+  color: #18BC9C;
+
+}
+
 .top-bar {
     position: fixed;
     top: 0px;
@@ -53,7 +64,7 @@ h6 {
 }
 
 .my-navbar-brand {
-    font-family:myFont;
+    font-family: myFont;
     letter-spacing: -5px;
 }
 
