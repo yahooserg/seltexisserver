@@ -5,7 +5,8 @@
   "main": "seltexisserver.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --harmony seltexisserver.js"
+    "start": "ts-node server.ts",
+    "watch": "nodemon -w . --ext \".ts\" --exec \"npm start\""
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.81"
   }
 }
