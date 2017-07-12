@@ -32,14 +32,33 @@ export class MySqlService {
     let request = connection.query(query);
 
     request
+    .on('result', (row, index) => {
+      items[items.length] = row;
+    })
+    .on('end', () => {
+      if(items.length === 1) {
+        this.getUserRights(items[0], callback)
+      } else callback(items);
+    });
+
+    connection.end();
+  }
+
+  getUserRights(user, callback) {
+    let items = [];
+    let query = `SELECT companyId, rightId FROM usersRights WHERE userId = "${user.id}"`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+
+    request
     .on('result', function (row, index) {
       items[items.length] = row;
     })
     .on('end', function () {
-      callback(items);
+      console.log(items);
+      user.rights = items;
+      callback(user);
     });
-
-    connection.end();
   }
 
 }
