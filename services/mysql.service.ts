@@ -55,7 +55,6 @@ export class MySqlService {
       items[items.length] = row;
     })
     .on('end', function () {
-      console.log(items);
       user.rights = items;
       callback(user);
     });
