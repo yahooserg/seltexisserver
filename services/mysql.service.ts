@@ -19,7 +19,9 @@ export class MySqlService {
       items[items.length] = row;
     })
     .on('end', function () {
-      callback(items);
+      if(items.length === 1) {
+        callback(items[0]);
+      } else callback(false);
     });
 
     connection.end();
@@ -58,6 +60,7 @@ export class MySqlService {
       user.rights = items;
       callback(user);
     });
+    connection.end();
   }
 
 }

@@ -22,14 +22,12 @@ app.use(function (req, res, next) {
 });
 
 app.get('/api/company/exists/:company', function (req, res) {
-
   mySqlService.getCompanyAtLogin(req.params.company, (items) => {
     res.send(items);
   });
 });
 
 app.get('/api/checkCurrentUser/:userId/:token', function (req, res) {
-
   mySqlService.getCurrentUser({id: req.params.userId, token: req.params.token}, (items) => {
     res.send(items);
   });
