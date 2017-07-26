@@ -7,11 +7,11 @@ const mySqlService = new MySqlService();
 const app: Application = express();
 
 const httpServer = http.createServer(app);
-httpServer.listen(5555,() => {})
+httpServer.listen(5555, () => { })
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
-  origin = req.headers.origin;
+    origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -21,14 +21,24 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/api/company/exists/:company', function (req, res) {
+app.get('/api/company/exists/:company', function(req, res) {
   mySqlService.getCompanyAtLogin(req.params.company, (items) => {
     res.send(items);
   });
 });
 
-app.get('/api/checkCurrentUser/:userId/:token', function (req, res) {
-  mySqlService.getCurrentUser({id: req.params.userId, token: req.params.token}, (items) => {
+app.get('/api/logInUser/:email/:password/:companyId', function(req, res) {
+  mySqlService.logIn({
+    email: req.params.email,
+    password: req.params.password,
+    companyId: req.params.companyId
+  }, (items) => {
+    res.send(items);
+  });
+});
+
+app.get('/api/checkCurrentUser/:userId/:token', function(req, res) {
+  mySqlService.getCurrentUser({ id: req.params.userId, token: req.params.token }, (items) => {
     res.send(items);
   });
 });
