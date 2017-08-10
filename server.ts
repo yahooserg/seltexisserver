@@ -22,8 +22,12 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/company/exists/:company', function(req, res) {
-  mySqlService.getCompanyAtLogin(req.params.company, (items) => {
-    res.send(items);
+  mySqlService.getCompanyAtLogin(req.params.company, (items, error) => {
+    if (error) {
+      res.send({ status: 'error', error: error });
+    } else {
+      res.send({ status: 'ok', items: items });
+    }
   });
 });
 
@@ -32,8 +36,12 @@ app.get('/api/logInUser/:email/:password/:companyId', function(req, res) {
     email: req.params.email,
     password: req.params.password,
     companyId: req.params.companyId
-  }, (items) => {
-    res.send(items);
+  }, (items, error) => {
+    if (error) {
+      res.send({ status: 'error', error: error });
+    } else {
+      res.send({ status: 'ok', items: items });
+    }
   });
 });
 

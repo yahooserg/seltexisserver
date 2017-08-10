@@ -10,16 +10,22 @@ export class MySqlService {
 
   getCompanyAtLogin(companyName, callback) {
     let items = [];
+    let error = false;
     let query = `SELECT idcompanies as id, name, fullName FROM companies WHERE name = "${companyName}"`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
+      .on('error', function(err) {
+        error = err;
+      })
       .on('result', function(row, index) {
         items[items.length] = row;
       })
       .on('end', function() {
-        if (items.length === 1) {
+        if (error) {
+          callback(false, error);
+        } else if (items.length === 1) {
           callback(items[0]);
         } else callback(false);
       });
@@ -48,23 +54,32 @@ export class MySqlService {
 
   logIn(data, callback) {
     let items = [];
+    let error = false;
     let query = `call getUserRights(${data.companyId}, '${data.email}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
+      .on('error', function(err) {
+        error = err;
+      })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
       })
       .on('end', () => {
-        //let's get rid of OkPacket that arrives after stored procedure
-        items.splice(items.length - 1, 1);
-
-        if (items.length) {
-          this.logInUser(data, items, callback);
+        if (error) {
+          callback(false, error);
         } else {
-          callback(false);
+          //let's get rid of OkPacket that arrives after stored procedure
+          items.splice(items.length - 1, 1);
+
+          if (items.length) {
+            this.logInUser(data, items, callback);
+          } else {
+            callback(false);
+          }
         }
+
       });
     connection.end();
   }
