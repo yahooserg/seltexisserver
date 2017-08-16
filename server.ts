@@ -50,3 +50,13 @@ app.get('/api/checkCurrentUser/:userId/:token', function(req, res) {
     res.send(items);
   });
 });
+
+app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:company/', function(req, res) {
+  mySqlService.checkUserLoggedIn(req.params.userID, req.params.email, req.params.token, req.params.company, (items, error) => {
+    if (error) {
+      res.send({ status: 'error', error: error });
+    } else {
+      res.send({ status: 'ok', items: items });
+    }
+  });
+});

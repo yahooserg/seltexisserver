@@ -52,6 +52,24 @@ export class MySqlService {
     connection.end();
   }
 
+
+  getUserRights(user, callback) {
+    let items = [];
+    let query = `SELECT companyId, rightId FROM usersRights WHERE userId = "${user.id}"`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+
+    request
+      .on('result', function(row, index) {
+        items[items.length] = row;
+      })
+      .on('end', function() {
+        user.rights = items;
+        callback(user);
+      });
+    connection.end();
+  }
+
   logIn(data, callback) {
     let items = [];
     let error = false;
@@ -109,19 +127,53 @@ export class MySqlService {
     connection.end();
   }
 
-  getUserRights(user, callback) {
+  checkUserLoggedIn(user, email, token, company, callback) {
     let items = [];
-    let query = `SELECT companyId, rightId FROM usersRights WHERE userId = "${user.id}"`;
+    let error = false;
+    let query = `call getUserRights(${company}, '${email}')`
+    console.log(query);
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
-      .on('result', function(row, index) {
+      .on('error', function(err) {
+        error = err;
+      })
+      .on('result', (row, index) => {
+        items[items.length] = row.rightId;
+      })
+      .on('end', () => {
+        if (error) {
+          callback(false, error);
+        } else {
+          //let's get rid of OkPacket that arrives after stored procedure
+          items.splice(items.length - 1, 1);
+
+          if (items.length) {
+            this.checkUserLoggedInNext(user, token, callback);
+          } else {
+            callback(false);
+          }
+        }
+
+      });
+    connection.end();
+  }
+
+  checkUserLoggedInNext(user, token, callback) {
+    let items = [];
+    let query = `call checkUserLoggedIn(${user}, ${token})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+
+    request
+      .on('result', (row, index) => {
         items[items.length] = row;
       })
-      .on('end', function() {
-        user.rights = items;
-        callback(user);
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items[0]);
       });
     connection.end();
   }
