@@ -79,8 +79,13 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
   });
 
   app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newnumber/:newnumber/newManufacturer/:newmanufacturer', function(req, res) {
-    console.log('params: ', req.params);
     mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.params.newnumber, req.params.newmanufacturer, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.put('/api/updateinventorymainnumber/company/:company/numberid/:numberid/inventoryid/:inventoryid/', function(req, res) {
+    mySqlService.updateInventoryMainNumber(req.params.company, req.params.numberid, req.params.inventoryid, (items) => {
       res.send(items);
     });
   });
