@@ -2,7 +2,7 @@
 import * as express from 'express';
 import { Application } from 'express';
 import * as http from 'http';
-import {MySqlService} from './services/mysql.service';
+import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 const app: Application = express();
 
@@ -59,4 +59,30 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
       res.send({ status: 'ok', items: items });
     }
   });
+
+  app.get('/api/getallinventory/company/:company', function(req, res) {
+    mySqlService.getAllInventory(req.params.company, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.get('/api/getinventory/company/:company/id/:id', function(req, res) {
+    mySqlService.getInventory(req.params.company, req.params.id, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.get('/api/getinventorynumbers/company/:company/id/:id', function(req, res) {
+    mySqlService.getInventoryNumbers(req.params.company, req.params.id, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newnumber/:newnumber/newManufacturer/:newmanufacturer', function(req, res) {
+    console.log('params: ', req.params);
+    mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.params.newnumber, req.params.newmanufacturer, (items) => {
+      res.send(items);
+    });
+  });
+
 });

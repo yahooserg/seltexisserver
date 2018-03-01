@@ -131,7 +131,6 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `call getUserRights(${company}, '${email}')`
-    console.log(query);
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
@@ -174,6 +173,75 @@ export class MySqlService {
         // let's get rid of OkPacket that arrives after stored procedure
         items.splice(items.length - 1, 1);
         callback(items[0]);
+      });
+    connection.end();
+  }
+
+  getAllInventory(company, callback) {
+    let items = [];
+    let query = `call getAllInventory(${company})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  getInventory(company, id, callback) {
+    let items = [];
+    let query = `call getInventory(${company}, ${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  getInventoryNumbers(company, id, callback) {
+    // console.log("heyhey")
+    let items = [];
+    let query = `call getInventoryNumbers(${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  updateInventoryNumber(company, numberId, newNumber, newManufacturer, callback) {
+    let items = [];
+    let query = `call updateInventoryNumber(${numberId},'${newNumber}',${newManufacturer})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
       });
     connection.end();
   }
