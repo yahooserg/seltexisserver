@@ -90,4 +90,20 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
+  app.post('/api/saveinventorynewnumber/company/:company/partid/:partid/newnumber/:newnumber/newManufacturer/:newmanufacturer', function(req, res) {
+    mySqlService.saveInventoryNewNumber(req.params.company, req.params.partid, req.params.newnumber, req.params.newmanufacturer, (items) => {
+      res.send(items);
+    });
+
+  });
+
+  app.delete('/api/deleteinventorynumber/company/:company/numberid/:numberid', function(req, res) {
+    mySqlService.deleteInventoryNumber(req.params.company, req.params.numberid, (items) => {
+      res.send(items);
+    });
+
+  });
+
+
+
 });
