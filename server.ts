@@ -60,6 +60,12 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     }
   });
 
+  app.get('/api/getmanufacturers/company/:company', function(req, res) {
+    mySqlService.getManufacturers(req.params.company, (items) => {
+      res.send(items);
+    });
+  });
+
   app.get('/api/getallinventory/company/:company', function(req, res) {
     mySqlService.getAllInventory(req.params.company, (items) => {
       res.send(items);
