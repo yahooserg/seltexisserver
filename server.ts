@@ -110,6 +110,12 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
 
   });
 
+  app.put('/api/updateinventorydescription/company/:company/inventoryid/:inventoryid/newdescription/:newdescription', function(req, res) {
+    mySqlService.updateInventoryDescription(req.params.company, req.params.inventoryid, req.params.newdescription, (items) => {
+      res.send(items);
+    });
+  });
+
 
 
 });

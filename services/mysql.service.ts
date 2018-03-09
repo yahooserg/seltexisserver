@@ -314,4 +314,21 @@ export class MySqlService {
     connection.end();
   }
 
+  updateInventoryDescription(company, inventoryId, newDescription, callback) {
+    let items = [];
+    let query = `call updateInventoryDescription(${inventoryId},'${newDescription}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
 }
