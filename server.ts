@@ -5,9 +5,14 @@ import * as http from 'http';
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 const app: Application = express();
+var bodyParser = require('body-parser')
+
 
 const httpServer = http.createServer(app);
-httpServer.listen(5555, () => { })
+httpServer.listen(5555, () => { });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
@@ -84,8 +89,8 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
-  app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newnumber/:newnumber/newManufacturer/:newmanufacturer', function(req, res) {
-    mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.params.newnumber, req.params.newmanufacturer, (items) => {
+  app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newManufacturer/:newmanufacturer', function(req, res) {
+    mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.body.newNumber, req.params.newmanufacturer, (items) => {
       res.send(items);
     });
   });
@@ -96,8 +101,8 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
-  app.post('/api/saveinventorynewnumber/company/:company/partid/:partid/newnumber/:newnumber/newManufacturer/:newmanufacturer', function(req, res) {
-    mySqlService.saveInventoryNewNumber(req.params.company, req.params.partid, req.params.newnumber, req.params.newmanufacturer, (items) => {
+  app.post('/api/saveinventorynewnumber/company/:company/partid/:partid/newManufacturer/:newmanufacturer', function(req, res) {
+    mySqlService.saveInventoryNewNumber(req.params.company, req.params.partid, req.body.newNumber, req.params.newmanufacturer, (items) => {
       res.send(items);
     });
 
@@ -110,12 +115,31 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
 
   });
 
-  app.put('/api/updateinventorydescription/company/:company/inventoryid/:inventoryid/newdescription/:newdescription', function(req, res) {
-    mySqlService.updateInventoryDescription(req.params.company, req.params.inventoryid, req.params.newdescription, (items) => {
+  app.put('/api/updateinventorydescription/company/:company/inventoryid/:inventoryid', function(req, res) {
+    mySqlService.updateInventoryDescription(req.params.company, req.params.inventoryid, req.body.newDescription, (items) => {
       res.send(items);
     });
   });
 
+  app.put('/api/updatemanufacturer/company/:company/id/:id', function(req, res) {
+    mySqlService.updateManufacturer(req.params.company, req.params.id, req.body.name, req.body.fullName, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.delete('/api/deletemanufacturer/company/:company/id/:id', function(req, res) {
+    mySqlService.deleteManufacturer(req.params.company, req.params.id, (items) => {
+      res.send(items);
+    });
+
+  });
+
+  app.post('/api/addmanufacturer/company/:company', function(req, res) {
+    mySqlService.addManufacturer(req.params.company, req.body.name, req.body.fullName, (items) => {
+      res.send(items);
+    });
+
+  });
 
 
 });

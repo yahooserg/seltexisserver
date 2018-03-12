@@ -163,9 +163,17 @@ export class MySqlService {
     let items = [];
     let query = `call checkUserLoggedIn(${user}, ${token})`;
     let connection = mysql.createConnection(mySqlConnection);
+
+
     let request = connection.query(query);
 
+
     request
+      .on('error',(err)=>{
+        console.log(err);
+        callback({'error':err});
+        return;
+      })
       .on('result', (row, index) => {
         items[items.length] = row;
       })
@@ -320,6 +328,60 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  updateManufacturer(company, id, name, fullName, callback) {
+    let items = [];
+    let query = `call updateManufacturer(${id},'${name}','${fullName}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  deleteManufacturer(company, id, callback) {
+    let items = [];
+    let query = `call deleteManufacturer(${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  addManufacturer(company, newName, newFullName, callback) {
+    let items = [];
+    let query = `call addManufacturer('${newName}','${newFullName}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', function(err) {
+        console.log(err);
+      })
       .on('result', (row, index) => {
         items[items.length] = row;
       })
