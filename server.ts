@@ -4,15 +4,18 @@ import { Application } from 'express';
 import * as http from 'http';
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
+import { MyFileService } from './services/file.service';
+const myFileService = new MyFileService();
 const app: Application = express();
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+// myFileService.updateImage(1,1,1,3);
 
 
 const httpServer = http.createServer(app);
 httpServer.listen(5555, () => { });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
+app.use(bodyParser.json({limit: '5mb'}));
 
 app.use(function(req, res, next) {
   var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
@@ -136,6 +139,13 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
 
   app.post('/api/addmanufacturer/company/:company', function(req, res) {
     mySqlService.addManufacturer(req.params.company, req.body.name, req.body.fullName, (items) => {
+      res.send(items);
+    });
+
+  });
+
+  app.post('/api/updateimage/company/:company', function(req, res) {
+    myFileService.updateImage(req.params.company, req.body.image, req.body.partId, (items) => {
       res.send(items);
     });
 
