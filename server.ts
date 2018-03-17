@@ -92,6 +92,12 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
+  app.get('/api/getinventoryimage/company/:company/id/:id', function(req, res) {
+    myFileService.getInventoryImage(req.params.company, req.params.id, (items) => {
+      res.send(items);
+    });
+  });
+
   app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newManufacturer/:newmanufacturer', function(req, res) {
     mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.body.newNumber, req.params.newmanufacturer, (items) => {
       res.send(items);

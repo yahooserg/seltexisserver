@@ -15,12 +15,44 @@ export class MyFileService {
     image = Buffer.from(image, 'base64')
     // console.log('img: ',image);
     fs.writeFile(file, image, (err)=>{
-      if (err) {
-        callback({error:true})
-      } else {
-        callback({done:true})
+    if (err) {
+      callback({error:true});
+    } else {
+      callback({done:true});
+    }
+  });
+}
+
+public getInventoryImage(company, partId, callback) {
+
+  let file = `${__dirname}/${fsConfig.workDir}${company}-${partId}.png`;
+  if (!fs.existsSync(file)) {
+    let file = `${__dirname}/${fsConfig.workDir}nophoto.png`;
+    fs.readFile(file,(err,data)=>{
+      if(err) {
+        callback({error:true});
       }
-    });
+      let image = Buffer.from(data).toString('base64');
+      image = `data:;base64,${image}`;
+      callback({image: image});
+    })
+  } else {
+    fs.readFile(file,(err,data)=>{
+      if(err) {
+        callback({error:true});
+      }
+      let image = Buffer.from(data).toString('base64');
+      image = `data:;base64,${image}`;
+      callback({image: image});
+    })
   }
+
+
+  // console.log(file)
+  // if (fs.existsSync(file)) {
+  //   callback({exists:true});
+  // }
+}
+
 
 }
