@@ -26,7 +26,6 @@ export class MyFileService {
 public getInventoryImage(company, partId, callback) {
 
   let file = `${__dirname}/${fsConfig.workDir}${company}-${partId}.png`;
-  console.log(file);
   let readFile = function (file) {
     fs.readFile(file,(err,data)=>{
       if(err) {
