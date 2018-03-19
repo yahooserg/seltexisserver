@@ -2,17 +2,17 @@
 import * as express from 'express';
 import { Application } from 'express';
 import * as http from 'http';
+import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
+const myNodeConfig = new MyNodeConfig();
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 import { MyFileService } from './services/file.service';
 const myFileService = new MyFileService();
 const app: Application = express();
 var bodyParser = require('body-parser');
-// myFileService.updateImage(1,1,1,3);
-
 
 const httpServer = http.createServer(app);
-httpServer.listen(5555, () => { });
+httpServer.listen(myNodeConfig.serverPort, () => { });
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
