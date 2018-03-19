@@ -26,17 +26,7 @@ export class MyFileService {
 public getInventoryImage(company, partId, callback) {
 
   let file = `${__dirname}/${fsConfig.workDir}${company}-${partId}.png`;
-  if (!fs.existsSync(file)) {
-    let file = `${__dirname}/${fsConfig.workDir}nophoto.png`;
-    fs.readFile(file,(err,data)=>{
-      if(err) {
-        callback({error:true});
-      }
-      let image = Buffer.from(data).toString('base64');
-      image = `data:;base64,${image}`;
-      callback({image: image});
-    })
-  } else {
+  let readFile = function (file) {
     fs.readFile(file,(err,data)=>{
       if(err) {
         callback({error:true});
@@ -46,6 +36,15 @@ public getInventoryImage(company, partId, callback) {
       callback({image: image});
     })
   }
+
+  if (!fs.existsSync(file)) {
+    let file = `${__dirname}/${fsConfig.workDir}nophoto.png`;
+    readFile(file);
+  } else {
+    readFile(file);
+  }
+
+
 
 
   // console.log(file)
