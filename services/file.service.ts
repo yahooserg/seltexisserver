@@ -11,7 +11,6 @@ export class MyFileService {
   public updateImage(company, image, partId, callback) {
 
     let file = `${__dirname}/${fsConfig.workDir}${company}-${partId}.png`;
-    console.log(file);
     image = image.replace(/^data:;base64,/, "");
     image = Buffer.from(image, 'base64')
     // console.log('img: ',image);
@@ -27,6 +26,7 @@ export class MyFileService {
 public getInventoryImage(company, partId, callback) {
 
   let file = `${__dirname}/${fsConfig.workDir}${company}-${partId}.png`;
+  console.log(file);
   let readFile = function (file) {
     fs.readFile(file,(err,data)=>{
       if(err) {
