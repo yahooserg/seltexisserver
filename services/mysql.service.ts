@@ -106,6 +106,7 @@ export class MySqlService {
     let items = [];
     let token = Math.floor((Math.random() * 10000000) + 1);
     let query = `call logInUser('${data.email}', '${data.password}', ${token})`;
+    console.log(query);
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
