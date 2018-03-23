@@ -12,12 +12,16 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `SELECT idcompanies as id, name, fullName FROM companies WHERE name = "${companyName}"`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
       .on('error', function(err) {
         error = err;
+        console.log(query, err);
+
       })
       .on('result', function(row, index) {
         items[items.length] = row;
@@ -36,10 +40,16 @@ export class MySqlService {
   getCurrentUser(user, callback) {
     let items = [];
     let query = `SELECT users.id as id, usersSecrets.token as token FROM users, usersSecrets WHERE users.id = "${user.id}" and usersSecrets.token = "${user.token}" and users.id = usersSecrets.id`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
+    .on('error', function(err) {
+      console.log(query, err);
+
+    })
       .on('result', (row, index) => {
         items[items.length] = row;
       })
@@ -56,10 +66,16 @@ export class MySqlService {
   getUserRights(user, callback) {
     let items = [];
     let query = `SELECT companyId, rightId FROM usersRights WHERE userId = "${user.id}"`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
+    .on('error', function(err) {
+      console.log(query, err);
+
+    })
       .on('result', function(row, index) {
         items[items.length] = row;
       })
@@ -74,12 +90,16 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `call getUserRights(${data.companyId}, '${data.email}')`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
       .on('error', function(err) {
         error = err;
+        console.log(query, err);
+
       })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
@@ -111,6 +131,10 @@ export class MySqlService {
     let request = connection.query(query);
 
     request
+    .on('error', function(err) {
+      console.log(query, err);
+
+    })
       .on('result', (row, index) => {
         items[items.length] = row;
       })
@@ -131,13 +155,17 @@ export class MySqlService {
   checkUserLoggedIn(user, email, token, company, callback) {
     let items = [];
     let error = false;
-    let query = `call getUserRights(${company}, '${email}')`
+    let query = `call getUserRights(${company}, '${email}')`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
       .on('error', function(err) {
         error = err;
+        console.log(query, err);
+        
       })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
@@ -163,6 +191,8 @@ export class MySqlService {
   checkUserLoggedInNext(user, token, callback) {
     let items = [];
     let query = `call checkUserLoggedIn(${user}, ${token})`;
+    console.log(query);
+
     let connection = mysql.createConnection(mySqlConnection);
 
 
