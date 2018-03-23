@@ -12,7 +12,7 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `SELECT idcompanies as id, name, fullName FROM companies WHERE name = "${companyName}"`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -20,7 +20,7 @@ export class MySqlService {
     request
       .on('error', function(err) {
         error = err;
-        console.log(query, err);
+        // console.log(query, err);
 
       })
       .on('result', function(row, index) {
@@ -40,14 +40,14 @@ export class MySqlService {
   getCurrentUser(user, callback) {
     let items = [];
     let query = `SELECT users.id as id, usersSecrets.token as token FROM users, usersSecrets WHERE users.id = "${user.id}" and usersSecrets.token = "${user.token}" and users.id = usersSecrets.id`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
     .on('error', function(err) {
-      console.log(query, err);
+      // console.log(query, err);
 
     })
       .on('result', (row, index) => {
@@ -66,14 +66,14 @@ export class MySqlService {
   getUserRights(user, callback) {
     let items = [];
     let query = `SELECT companyId, rightId FROM usersRights WHERE userId = "${user.id}"`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
     .on('error', function(err) {
-      console.log(query, err);
+      // console.log(query, err);
 
     })
       .on('result', function(row, index) {
@@ -90,7 +90,7 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `call getUserRights(${data.companyId}, '${data.email}')`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -98,17 +98,13 @@ export class MySqlService {
     request
       .on('error', function(err) {
         error = err;
-        console.log(query, err);
-
+        // console.log(query, err);
       })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
-        console.log(query, items);
 
       })
       .on('end', () => {
-        console.log(query, 'end', items);
-
         if (error) {
           callback(false, error);
         } else {
@@ -130,13 +126,13 @@ export class MySqlService {
     let items = [];
     let token = Math.floor((Math.random() * 10000000) + 1);
     let query = `call logInUser('${data.email}', '${data.password}', ${token})`;
-    console.log(query);
+    // console.log(query);
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
 
     request
     .on('error', function(err) {
-      console.log(query, err);
+      // console.log(query, err);
 
     })
       .on('result', (row, index) => {
@@ -160,7 +156,7 @@ export class MySqlService {
     let items = [];
     let error = false;
     let query = `call getUserRights(${company}, '${email}')`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -168,7 +164,7 @@ export class MySqlService {
     request
       .on('error', function(err) {
         error = err;
-        console.log(query, err);
+        // console.log(query, err);
 
       })
       .on('result', (row, index) => {
@@ -195,7 +191,7 @@ export class MySqlService {
   checkUserLoggedInNext(user, token, callback) {
     let items = [];
     let query = `call checkUserLoggedIn(${user}, ${token})`;
-    console.log(query);
+    // console.log(query);
 
     let connection = mysql.createConnection(mySqlConnection);
 
@@ -205,7 +201,7 @@ export class MySqlService {
 
     request
       .on('error',(err)=>{
-        console.log(err);
+        // console.log(err);
         callback({'error':err});
         return;
       })
