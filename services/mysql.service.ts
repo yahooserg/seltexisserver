@@ -103,8 +103,12 @@ export class MySqlService {
       })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
+        console.log(query, items);
+
       })
       .on('end', () => {
+        console.log(query, 'end', items);
+
         if (error) {
           callback(false, error);
         } else {
@@ -165,7 +169,7 @@ export class MySqlService {
       .on('error', function(err) {
         error = err;
         console.log(query, err);
-        
+
       })
       .on('result', (row, index) => {
         items[items.length] = row.rightId;
