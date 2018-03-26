@@ -370,6 +370,40 @@ export class MySqlService {
     connection.end();
   }
 
+  updateInventoryComment(company, inventoryId, newComment, callback) {
+    let items = [];
+    let query = `call updateInventoryComment(${inventoryId},'${newComment}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  updateInventoryWeight(company, inventoryId, newWeight, callback) {
+    let items = [];
+    let query = `call updateInventoryWeight(${inventoryId},${newWeight})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
   updateManufacturer(company, id, name, fullName, callback) {
     let items = [];
     let query = `call updateManufacturer(${id},'${name}','${fullName}')`;

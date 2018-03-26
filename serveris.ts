@@ -130,6 +130,19 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
+  app.put('/api/updateinventorycomment/company/:company/inventoryid/:inventoryid', function(req, res) {
+    console.log('in comment')
+    mySqlService.updateInventoryComment(req.params.company, req.params.inventoryid, req.body.newComment, (items) => {
+      res.send(items);
+    });
+  });
+
+  app.put('/api/updateinventoryweight/company/:company/inventoryid/:inventoryid', function(req, res) {
+    mySqlService.updateInventoryWeight(req.params.company, req.params.inventoryid, req.body.newWeight, (items) => {
+      res.send(items);
+    });
+  });
+
   app.put('/api/updatemanufacturer/company/:company/id/:id', function(req, res) {
     mySqlService.updateManufacturer(req.params.company, req.params.id, req.body.name, req.body.fullName, (items) => {
       res.send(items);
