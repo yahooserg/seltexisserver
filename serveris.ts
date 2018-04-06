@@ -8,6 +8,8 @@ import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 import { MyFileService } from './services/file.service';
 const myFileService = new MyFileService();
+import { MyFunctions } from './services/functions.service';
+const myFunctions = new MyFunctions();
 const app: Application = express();
 var bodyParser = require('body-parser');
 
@@ -86,6 +88,16 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
   });
 
+  app.get('/api/searchinventory/company/:company/search/:search', function(req, res) {
+    let search = req.params.search;
+    search = search.split(' ');
+    search = myFunctions.getRidOfEmptyItems(search);
+    search = myFunctions.createComplicatedQuery(search);
+    mySqlService.searchInventory(search, (items) => {
+      res.send(items);
+    });
+  });
+
   app.get('/api/getinventorynumbers/company/:company/id/:id', function(req, res) {
     mySqlService.getInventoryNumbers(req.params.company, req.params.id, (items) => {
       res.send(items);
@@ -131,7 +143,6 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
   });
 
   app.put('/api/updateinventorycomment/company/:company/inventoryid/:inventoryid', function(req, res) {
-    console.log('in comment')
     mySqlService.updateInventoryComment(req.params.company, req.params.inventoryid, req.body.newComment, (items) => {
       res.send(items);
     });
@@ -169,6 +180,13 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
     });
 
   });
+
+  // app.get('/api/tempfunc', function(req, res) {
+  //   console.log('tempFunc')
+  //   mySqlService.tempFunc((items) => {
+  //     res.send(items);
+  //   });
+  // });
 
 
 });

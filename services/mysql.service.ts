@@ -285,6 +285,26 @@ export class MySqlService {
     connection.end();
   }
 
+  searchInventory(query, callback) {
+    let items = [];
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error',(err)=>{
+        // console.log(err);
+        callback({'error':err});
+      })
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
   updateInventoryNumber(company, numberId, newNumber, newManufacturer, callback) {
     let items = [];
     let query = `call updateInventoryNumber(${numberId},'${newNumber}',${newManufacturer})`;
@@ -481,6 +501,44 @@ export class MySqlService {
         callback(JSON.stringify(bufferBase64));
       });
     connection.end();
+  }
+
+  tempFunc(callback) {
+    let items = [];
+    let query = `select inventory.id, inventory.description from inventoryComments, inventory where inventoryComments.comment ="" and inventoryComments.id = inventory.id and inventory.description like N'%cat%'`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        let regex = /[A-Za-z0-9]{2,3}-?[A-Za-z0-9]{4,4}/;
+        let regex2 = /CAT/;
+
+        for(let i = 0; i < items.length; i += 1) {
+          if(regex2.test(items[i].description)){
+            let index = items[i].description.indexOf("CAT");
+            items[i].description = items[i].description.substring(index);
+            let regOutput = regex.exec(items[i].description);
+            // console.log(items[i].description)
+            // console.log(regOutput)
+            if (regOutput){
+            items[i].description = items[i].description.substring(0,regOutput.index - 1 );
+            console.log(items[i].description)
+            query = `update inventoryComments set comment = '${items[i].description}' where id = ${items[i].id}`;
+            let request = connection.query(query);
+          }
+
+          }
+
+        }
+        // callback(items);
+        connection.end();
+
+      });
   }
 
 }
