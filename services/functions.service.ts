@@ -47,15 +47,11 @@ export class MyFunctions {
           catStr = "(Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
         } else {
           str = str + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
-          catStr = catStr + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
+          catStr = catStr + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')"; 
         }
       }
     }
-<<<<<<< HEAD
     str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.link as link from inventory1s as p where (" + str + ")";
-=======
-    str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.link as link from inventory as p where (" + str + ")";
->>>>>>> origin/master
     if (countCatParts) {
       str = str + " or (" + catStr + ")";
     }
