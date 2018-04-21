@@ -51,7 +51,11 @@ export class MyFunctions {
         }
       }
     }
+<<<<<<< HEAD
     str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.link as link from inventory1s as p where (" + str + ")";
+=======
+    str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.link as link from inventory as p where (" + str + ")";
+>>>>>>> origin/master
     if (countCatParts) {
       str = str + " or (" + catStr + ")";
     }
