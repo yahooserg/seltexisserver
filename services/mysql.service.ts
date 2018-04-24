@@ -503,42 +503,132 @@ export class MySqlService {
     connection.end();
   }
 
-  tempFunc(callback) {
-    let items = [];
-    let query = `select inventory.id, inventory.description from inventoryComments, inventory where inventoryComments.comment ="" and inventoryComments.id = inventory.id and inventory.description like N'%cat%'`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('result', (row, index) => {
-        items[items.length] = row;
-      })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        // items.splice(items.length - 1, 1);
-        let regex = /[A-Za-z0-9]{2,3}-?[A-Za-z0-9]{4,4}/;
-        let regex2 = /CAT/;
+  // tempFunc(callback) {
+  //   let items = [];
+  //
+  //
+  //   let regex2 = /Volvo/;
+  //
+  //   let query = `select inventory.id, inventory.description from inventory, inventoryNumbers where inventory.id = inventoryNumbers.inventoryId and inventory.description like '%Volvo%' and inventory.description not like '%dd%' and inventory.description not like '%cat%' and inventory.description not like '%prodiesel%' and inventory.description not like '%pai%' and inventory.description not like '%mcbee%' and inventory.description not like '%ctp%' and inventory.description not like '%cgr%' and inventory.description not like '%MAHLE%' and inventoryNumbers.number = ''`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //
+  //
+  //   request
+  //     .on('result', (row, index) => {
+  //       // items[items.length] = row;
+  //       if(regex2.test(row.description)){
+  //         // console.log(row.description)
+  //         // let index = row.description.indexOf("Cummins");
+  //         // row.comment = row.description.substring(index);
+  //         // row.description = row.description.substring(0, index - 1);
+  //         let regex = /(R|E|EA|RA|A)?[0-9\-]{5,12}/g;
+  //         let regOutput = row.description.match(regex);
+  //         // console.log(row.description,';')
+  //         // console.log(row.comment,';')
+  //         // console.log(regOutput);
+  //
+  //
+  //
+  //         if (regOutput){
+  //
+  //           // query = `delete from inventoryNumbers where inventoryId = ${row.id}`;
+  //           // console.log(query);
+  //           // connection.query(query);
+  //           for(let i = 0; i < regOutput.length; i += 1) {
+  //             if (i === 0) {
+  //               query = `update inventoryNumbers set number = '${regOutput[i]}' where inventoryId = ${row.id} and main = 1`;
+  //             } else {
+  //               query = `insert into inventoryNumbers (inventoryId, manufacturerId, number, main) values (${row.id}, 4, '${regOutput[i]}',0 )`;
+  //             }
+  //             connection.query(query);
+  //
+  //             // console.log(query);
+  //           }
+  //         }
+  //         // console.log('-------');
+  //         // regex = /[A-Za-z0-9]{2,3}-[0-9]{4,4}/g;
+  //         // regOutput = row.description.match(regex);
+  //         // // console.log(row.description,';')
+  //         // // console.log(row.comment,';')
+  //         // console.log(regOutput);
+  //         //
+  //         // if (regOutput){
+  //         //   // query = `delete from inventoryNumbers where inventoryId = ${row.id}`;
+  //         //   // console.log(query);
+  //         //   // connection.query(query);
+  //         //   for(let i = 0; i < regOutput.length; i += 1) {
+  //         //
+  //         //     query = `insert into inventoryNumbers (inventoryId, manufacturerId, number, main) values (${row.id}, 1, '${regOutput[i]}',0 )`;
+  //         //     // connection.query(query);
+  //         //
+  //         //     console.log(query);
+  //         //   }
+  //         // }
+  //         // query = `update inventoryComments set comment = '${row.comment}' where id = ${row.id}`;
+  //         // query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
+  //         // connection.query(query);
+  //         // console.log(query);
+  //         // query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
+  //
+  //       }
+  //     })
+  //     .on('end', () => {
+  //       callback({"done":"allright"});
+  //       connection.end();
+  //
+  //     });
+  // }
 
-        for(let i = 0; i < items.length; i += 1) {
-          if(regex2.test(items[i].description)){
-            let index = items[i].description.indexOf("CAT");
-            items[i].description = items[i].description.substring(index);
-            let regOutput = regex.exec(items[i].description);
-            // console.log(items[i].description)
-            // console.log(regOutput)
-            if (regOutput){
-            items[i].description = items[i].description.substring(0,regOutput.index - 1 );
-            console.log(items[i].description)
-            query = `update inventoryComments set comment = '${items[i].description}' where id = ${items[i].id}`;
-            let request = connection.query(query);
-          }
-
-          }
-
-        }
-        // callback(items);
-        connection.end();
-
-      });
-  }
+  // tempFunc(callback) {
+  //   let items = [];
+  //   let qty = 0;
+  //   let regex = /[0-9]{3,12}/;
+  //
+  //   let regex2 = /Volvo/;
+  //
+  //   let query = `select inventory.id, inventory.description from inventory, inventoryNumbers where inventory.id = inventoryNumbers.inventoryId and inventory.description like '%Volvo%' and inventory.description not like '%cat%' and inventory.description not like '%prodiesel%'`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //
+  //
+  //   request
+  //     .on('result', (row, indexRow) => {
+  //       qty += 1;
+  //       // items[items.length] = row;
+  //       if(regex2.test(row.description)){
+  //         // console.log(row.description)
+  //         let index = row.description.indexOf("Volvo");
+  //         row.comment = row.description.substring(index);
+  //         row.description = row.description.substring(0, index - 1);
+  //         let regOutput = regex.exec(row.comment);
+  //         // console.log(row.description,';')
+  //         // console.log(row.comment,';')
+  //         // console.log(regOutput)
+  //
+  //         if (regOutput){
+  //           row.comment = row.comment.substring(0,regOutput.index - 1);
+  //
+  //           // console.log(query);
+  //           // let request = connection.query(query);
+  //         }
+  //         query = `update inventoryComments set comment = '${row.comment}' where id = ${row.id}`;
+  //         // query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
+  //         connection.query(query);
+  //         // console.log(query);
+  //         query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
+  //         connection.query(query);
+  //
+  //         // console.log(query);
+  //
+  //         // console.log('-------', qty);
+  //       }
+  //     })
+  //     .on('end', () => {
+  //       callback({"done":"allright"});
+  //       connection.end();
+  //
+  //     });
+  // }
 
 }

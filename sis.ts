@@ -181,12 +181,12 @@ app.get('/api/check/userlogged/user/:userID/email/:email/token/:token/company/:c
 
   });
 
-  // app.get('/api/tempfunc', function(req, res) {
-  //   console.log('tempFunc')
-  //   mySqlService.tempFunc((items) => {
-  //     res.send(items);
-  //   });
-  // });
+  app.get('/api/tempfunc', function(req, res) {
+    console.log('tempFunc')
+    mySqlService.tempFunc((items) => {
+      res.send(items);
+    });
+  });
 
 
 });
