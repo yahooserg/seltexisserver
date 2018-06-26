@@ -281,8 +281,9 @@ export class MySqlService {
         // let's get rid of OkPacket that arrives after stored procedure
         items.splice(items.length - 1, 1);
         callback(items);
+        // console.log(items);
+        connection.end();
       });
-    connection.end();
   }
 
   searchInventory(query, callback) {
@@ -501,6 +502,37 @@ export class MySqlService {
         callback(JSON.stringify(bufferBase64));
       });
     connection.end();
+  }
+
+  getPriceListData(company, callback) {
+    let items = [];
+    let query = `SELECT * FROM seltexru.inventory limit 10;`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', function(err) {
+        console.log(err);
+      })
+      .on('result', (row, index) => {
+        items[items.length] = row;
+        // console.log(row)
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        connection.end();
+        let lines: number = items.length;
+        let currentLines: number = 0;
+        for (let i: number = 0; i < lines; i += 1) {
+          this.getInventoryNumbers(company, items[i].id, (numbers)=>{
+            items[i].numbers = numbers;
+            currentLines += 1;
+            if(lines === currentLines) {
+              callback(items);
+            }
+          });
+        }
+      });
   }
 
   // tempFunc(callback) {

@@ -6,8 +6,9 @@ export class MyAWSService {
 
   }
 
-  public uploadPrice(data) {
+  public uploadPrice(data, callback) {
     console.log(data);
+    callback(data);
   }
 
 

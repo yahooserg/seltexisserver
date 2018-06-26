@@ -12,6 +12,8 @@ import { MyFunctions } from './services/functions.service';
 const myFunctions = new MyFunctions();
 import { MyXLService } from './services/xls.service';
 const myXLService = new MyXLService();
+import {MyAWSService} from './services/aws.service';
+const myAWSService = new MyAWSService();
 const app: Application = express();
 var bodyParser = require('body-parser');
 
@@ -185,8 +187,15 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
-  myXLService.createXLPrice('data');
-  res.send({"res":"yes"})
+  mySqlService.getPriceListData(req.params.company, (priceListData) => {
+    myXLService.createXLPrice(priceListData, (xlFile)=>{
+      myAWSService.uploadPrice(xlFile, (data)=>{
+        res.send(data);
+      });
+    });
+  });
+  // myXLService.createXLPrice('data');
+  // res.send({"res":"yes"})
 });
 
 // app.get('/api/tempfunc', function(req, res) {

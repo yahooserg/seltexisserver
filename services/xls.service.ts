@@ -1,6 +1,5 @@
 import * as xl from 'excel4node';
-import {MyAWSService} from './aws.service';
-const myAWSService = new MyAWSService();
+
 
 
 export class MyXLService {
@@ -9,8 +8,8 @@ export class MyXLService {
   ) {
   }
 
-  public createXLPrice(data) {
-    myAWSService.uploadPrice(data);
+  public createXLPrice(data, callback) {
+    callback(data);
   }
 
 
