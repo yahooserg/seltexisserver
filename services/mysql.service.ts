@@ -506,7 +506,7 @@ export class MySqlService {
 
   getPriceListData(company, callback) {
     let items = [];
-    let query = `SELECT * FROM seltexru.inventory limit 10;`;
+    let query = `SELECT * FROM seltexru.inventory;`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
