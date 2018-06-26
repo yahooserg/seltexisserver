@@ -10,7 +10,7 @@ export class MySqlService {
 
   getCompanyAtLogin(companyName, callback) {
     let items = [];
-    let error = false;
+    let error: any = false;
     let query = `SELECT idcompanies as id, name, fullName FROM companies WHERE name = "${companyName}"`;
     // console.log(query);
 
@@ -88,7 +88,7 @@ export class MySqlService {
 
   logIn(data, callback) {
     let items = [];
-    let error = false;
+    let error: any = false;
     let query = `call getUserRights(${data.companyId}, '${data.email}')`;
     // console.log(query);
 
@@ -154,7 +154,7 @@ export class MySqlService {
 
   checkUserLoggedIn(user, email, token, company, callback) {
     let items = [];
-    let error = false;
+    let error: any = false;
     let query = `call getUserRights(${company}, '${email}')`;
     // console.log(query);
 
