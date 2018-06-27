@@ -30,7 +30,7 @@ export class MyAWSService {
       }
       if (data) {
         console.log('Successfully uploaded package.');
-        callback(data)
+        callback("OK")
 
       }
     });

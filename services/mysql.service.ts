@@ -250,6 +250,23 @@ export class MySqlService {
     connection.end();
   }
 
+  getLast100Inventory(company, callback) {
+    let items = [];
+    let query = `SELECT * FROM seltexru.inventory order by id desc limit 100`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row, index) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
   getInventory(company, id, callback) {
     let items = [];
     let query = `call getInventory(${company}, ${id})`;
@@ -282,8 +299,9 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
         // console.log(items);
-        connection.end();
       });
+    connection.end();
+
   }
 
   searchInventory(query, callback) {
@@ -506,7 +524,7 @@ export class MySqlService {
 
   getPriceListData(company, callback) {
     let items = [];
-    let query = `SELECT * FROM seltexru.inventory;`;
+    let query = `SELECT * FROM seltexru.inventory where description like '%cat%' or comment like '%cat%' or description like '%prodiesel%' or comment like '%prodiesel%'`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
@@ -520,17 +538,29 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
-        connection.end();
+        callback("OK");
+
         let lines: number = items.length;
         let currentLines: number = 0;
         for (let i: number = 0; i < lines; i += 1) {
-          this.getInventoryNumbers(company, items[i].id, (numbers)=>{
-            items[i].numbers = numbers;
-            currentLines += 1;
-            if(lines === currentLines) {
-              callback(items);
-            }
-          });
+          let numbers = [];
+          query = `call getInventoryNumbers(${items[i].id})`;
+          request = connection.query(query);
+          request
+            .on('result', (row, index) => {
+              numbers[numbers.length] = row;
+            })
+            .on('end', () => {
+              numbers.splice(numbers.length - 1, 1);
+              items[i].numbers = numbers;
+              currentLines += 1;
+              console.log(`${currentLines}/${lines}`);
+              if(lines === currentLines) {
+                callback(items);
+                connection.end();
+              }
+            });
+
         }
       });
   }

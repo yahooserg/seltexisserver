@@ -87,6 +87,12 @@ app.get('/api/getallinventory/company/:company', function(req, res) {
   });
 });
 
+app.get('/api/getLast100inventory/company/:company', function(req, res) {
+  mySqlService.getLast100Inventory(req.params.company, (items) => {
+    res.send(items);
+  });
+});
+
 app.get('/api/getinventory/company/:company/id/:id', function(req, res) {
   mySqlService.getInventory(req.params.company, req.params.id, (items) => {
     res.send(items);
@@ -188,15 +194,15 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 
 app.get('/api/createxlprice', function(req, res) {
   mySqlService.getPriceListData(req.params.company, (priceListData) => {
-
-    myXLService.createXLPrice(priceListData, (xlFile)=>{
-      myAWSService.uploadPrice(xlFile, (data)=>{
-        res.send(priceListData);
+    if(priceListData === "OK") {
+      res.send({res: "OK"});
+    } else {
+      myXLService.createXLPrice(priceListData, (xlFile)=>{
+        myAWSService.uploadPrice(xlFile, (data)=>{
+        });
       });
-    });
+    }
   });
-  // myXLService.createXLPrice('data');
-  // res.send({"res":"yes"})
 });
 
 // app.get('/api/tempfunc', function(req, res) {

@@ -1,8 +1,6 @@
 import * as xl from 'excel4node';
 // const xl = new XL();
 
-
-
 export class MyXLService {
 
   constructor(
@@ -28,8 +26,6 @@ export class MyXLService {
     worksheet.cell(1,7).string('stock').style(style);
     worksheet.cell(1,8).string('in transit').style(style);
 
-
-
     for (let i: number = 0; i < data.length; i += 1) {
       data[i].numbersString = "";
 
@@ -41,22 +37,22 @@ export class MyXLService {
         data[i].numbersString += `${data[i].numbers[j].number} `;
       }
       if (data[i].stock > 12) {
-        data[i].stock = "> 12";
+        data[i].stock = "12+";
       } else {
         data[i].stock = `${data[i].stock}`;
       }
 
       if (data[i].ordered > 12) {
-        data[i].ordered = "> 12";
+        data[i].ordered = "12+";
       } else {
         data[i].ordered = `${data[i].stock}`;
       }
 
       worksheet.cell(i+2,1).number(data[i].id).style(style);
       worksheet.cell(i+2,2).string(`${data[i].description} ${data[i].comment}`).style(style);
-      worksheet.cell(i+2,3).string(data[i].manufacturer).style(style);
-      worksheet.cell(i+2,4).string(data[i].numberMain).style(style);
-      worksheet.cell(i+2,5).string(data[i].numbersString).style(style);
+      worksheet.cell(i+2,3).string(`${data[i].manufacturer}`).style(style);
+      worksheet.cell(i+2,4).string(`${data[i].numberMain}`).style(style);
+      worksheet.cell(i+2,5).string(`${data[i].numbersString}`).style(style);
       worksheet.cell(i+2,6).number(data[i].price).style(style);
       worksheet.cell(i+2,7).string(data[i].stock).style(style);
       worksheet.cell(i+2,8).string(data[i].ordered).style(style);
@@ -68,6 +64,5 @@ export class MyXLService {
     });
 
   }
-
 
 }
