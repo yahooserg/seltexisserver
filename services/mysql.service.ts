@@ -554,7 +554,7 @@ export class MySqlService {
               numbers.splice(numbers.length - 1, 1);
               items[i].numbers = numbers;
               currentLines += 1;
-              console.log(`${currentLines}/${lines}`);
+              // console.log(`${currentLines}/${lines}`);
               if(lines === currentLines) {
                 callback(items);
                 connection.end();
