@@ -16,7 +16,6 @@ export class MyFunctions {
 
   public getDateString () {
     let date: Date = new Date();
-    let dateString: string = "";
     let minutes: any = date.getMinutes();
     let seconds: any = date.getSeconds();
     if (minutes < 10) {
@@ -25,9 +24,8 @@ export class MyFunctions {
     if (seconds < 10) {
       seconds = `0${seconds}`
     }
-    dateString = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()+3}:${minutes}:${seconds}`;
+    return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()+3}:${minutes}:${seconds}`;
 
-    return dateString;
   }
 
   public createComplicatedQuery (arr) {
