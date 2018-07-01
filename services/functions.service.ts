@@ -14,6 +14,22 @@ export class MyFunctions {
     return arr;
   }
 
+  public getDateString () {
+    let date: Date = new Date();
+    let dateString: string = "";
+    let minutes: any = date.getMinutes();
+    let seconds: any = date.getSeconds();
+    if (minutes < 10) {
+      minutes = `0${minutes}`
+    }
+    if (seconds < 10) {
+      seconds = `0${seconds}`
+    }
+    dateString = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()+3}:${minutes}:${seconds}`;
+
+    return dateString;
+  }
+
   public createComplicatedQuery (arr) {
     var i,
       str = '',
@@ -47,7 +63,7 @@ export class MyFunctions {
           catStr = "(Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
         } else {
           str = str + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
-          catStr = catStr + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')"; 
+          catStr = catStr + " AND (Description like N'%"+arr[i]+"%' or Numbers like '%"+arr[i]+"%')";
         }
       }
     }

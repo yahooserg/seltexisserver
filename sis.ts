@@ -198,7 +198,7 @@ app.get('/api/createxlprice', function(req, res) {
       res.send({res: "OK"});
     } else {
       myXLService.createXLPrice(priceListData, (xlFile)=>{
-        myAWSService.uploadPrice(xlFile, (data)=>{
+        myAWSService.uploadPrice(xlFile, ()=>{
         });
       });
     }

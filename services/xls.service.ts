@@ -1,4 +1,6 @@
 import * as xl from 'excel4node';
+import { MyFunctions } from './functions.service';
+const myFunctions = new MyFunctions();
 // const xl = new XL();
 
 export class MyXLService {
@@ -26,10 +28,9 @@ export class MyXLService {
     worksheet.cell(1,6).string('price').style(style);
     worksheet.cell(1,7).string('stock').style(style);
     worksheet.cell(1,8).string('in transit').style(style);
-    let date: Date = new Date();
-    let priceUpdatedOnInfo: string = "";
-    priceUpdatedOnInfo = `Updated: ${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-    worksheet.cell(1,9).string(priceUpdatedOnInfo).style(style);
+
+    let priceUpdatedOnInfo: string = myFunctions.getDateString();
+    worksheet.cell(1,9).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
 
 
     for (let i: number = 0; i < data.length; i += 1) {
