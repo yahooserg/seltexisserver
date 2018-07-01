@@ -16,6 +16,7 @@ export class MyXLService {
         size: 12
       }
     });
+
     // numberFormat: '$#,##0.00; ($#,##0.00); -'
     worksheet.cell(1,1).string('id').style(style);
     worksheet.cell(1,2).string('name').style(style);
@@ -25,6 +26,11 @@ export class MyXLService {
     worksheet.cell(1,6).string('price').style(style);
     worksheet.cell(1,7).string('stock').style(style);
     worksheet.cell(1,8).string('in transit').style(style);
+    let date: Date = new Date();
+    let priceUpdatedOnInfo: string = "";
+    priceUpdatedOnInfo = `Updated: ${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    worksheet.cell(1,9).string(priceUpdatedOnInfo).style(style);
+
 
     for (let i: number = 0; i < data.length; i += 1) {
       data[i].numbersString = "";
