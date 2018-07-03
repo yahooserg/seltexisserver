@@ -23,7 +23,7 @@ export class MySqlService {
         // console.log(query, err);
 
       })
-      .on('result', function(row, index) {
+      .on('result', function(row) {
         items[items.length] = row;
       })
       .on('end', function() {
@@ -47,10 +47,10 @@ export class MySqlService {
 
     request
     .on('error', function(err) {
-      // console.log(query, err);
+      console.log(query, err);
 
     })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -73,10 +73,10 @@ export class MySqlService {
 
     request
     .on('error', function(err) {
-      // console.log(query, err);
+      console.log(query, err);
 
     })
-      .on('result', function(row, index) {
+      .on('result', function(row) {
         items[items.length] = row;
       })
       .on('end', function() {
@@ -100,7 +100,7 @@ export class MySqlService {
         error = err;
         // console.log(query, err);
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row.rightId;
 
       })
@@ -132,10 +132,10 @@ export class MySqlService {
 
     request
     .on('error', function(err) {
-      // console.log(query, err);
+      console.log(query, err);
 
     })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -167,7 +167,7 @@ export class MySqlService {
         // console.log(query, err);
 
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row.rightId;
       })
       .on('end', () => {
@@ -205,7 +205,7 @@ export class MySqlService {
         callback({'error':err});
         return;
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -222,7 +222,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -239,7 +239,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -256,7 +256,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -273,7 +273,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -291,7 +291,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -313,7 +313,7 @@ export class MySqlService {
         // console.log(err);
         callback({'error':err});
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -330,7 +330,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -347,7 +347,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -364,7 +364,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -381,7 +381,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -398,7 +398,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -415,7 +415,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -432,7 +432,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -449,7 +449,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -466,7 +466,7 @@ export class MySqlService {
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -486,7 +486,7 @@ export class MySqlService {
       .on('error', function(err) {
         console.log(err);
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
       })
       .on('end', () => {
@@ -506,7 +506,7 @@ export class MySqlService {
       .on('error', function(err) {
         console.log(err);
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
         // console.log(row)
       })
@@ -531,7 +531,7 @@ export class MySqlService {
       .on('error', function(err) {
         console.log(err);
       })
-      .on('result', (row, index) => {
+      .on('result', (row) => {
         items[items.length] = row;
         // console.log(row)
       })
@@ -547,7 +547,7 @@ export class MySqlService {
           query = `call getInventoryNumbers(${items[i].id})`;
           request = connection.query(query);
           request
-            .on('result', (row, index) => {
+            .on('result', (row) => {
               numbers[numbers.length] = row;
             })
             .on('end', () => {
@@ -564,6 +564,67 @@ export class MySqlService {
         }
       });
   }
+
+  public priceListCreateStart(company, callback) {
+    let items = [];
+    let query = `call priceListCreateStart('${company}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', function(err) {
+        console.log(err);
+      })
+      // .on('result', (row) => {
+      //   items[items.length] = row;
+      // })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        callback();
+      });
+    connection.end();
+  };
+
+  public priceListCreateFinish(company, callback) {
+    let items = [];
+    let query = `call priceListCreateFinish('${company}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', function(err) {
+        console.log(err);
+      })
+      // .on('result', (row) => {
+      //   items[items.length] = row;
+      // })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        // items.splice(items.length - 1, 1);
+        callback();
+      });
+    connection.end();
+  };
+
+  public priceListCreateGetStatus(company, callback) {
+    let items = [];
+    let query = `call priceListCreateGetStatus('${company}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', function(err) {
+        console.log(err);
+      })
+      .on('result', (row) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  };
+
 
   // tempFunc(callback) {
   //   let items = [];

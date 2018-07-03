@@ -193,15 +193,25 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
-  mySqlService.getPriceListData(req.params.company, (priceListData) => {
-    if(priceListData === "OK") {
-      res.send({res: "OK"});
-    } else {
-      myXLService.createXLPrice(priceListData, (xlFile)=>{
-        myAWSService.uploadPrice(xlFile, ()=>{
+  mySqlService.priceListCreateStart(1, ()=>{
+    mySqlService.getPriceListData(req.params.company, (priceListData) => {
+      if(priceListData === "OK") {
+        res.send({res: "OK"});
+      } else {
+        myXLService.createXLPrice(priceListData, (xlFile)=>{
+          myAWSService.uploadPrice(xlFile, ()=>{
+            mySqlService.priceListCreateFinish(1, ()=>{
+            });
+          });
         });
-      });
-    }
+      }
+    });
+  })
+});
+
+app.get('/api/pricelistcreatestatus', function(req, res) {
+  mySqlService.priceListCreateGetStatus(1, (data) => {
+    res.send(data);
   });
 });
 
