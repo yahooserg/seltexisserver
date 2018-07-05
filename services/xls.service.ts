@@ -44,13 +44,13 @@ export class MyXLService {
         data[i].numbersString += `${data[i].numbers[j].number} `;
       }
       if (data[i].stock > 12) {
-        data[i].stock = "12+";
+        data[i].stock = ">12";
       } else {
         data[i].stock = `${data[i].stock}`;
       }
 
       if (data[i].ordered > 12) {
-        data[i].ordered = "12+";
+        data[i].ordered = ">12";
       } else {
         data[i].ordered = `${data[i].stock}`;
       }
