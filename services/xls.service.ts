@@ -40,8 +40,10 @@ export class MyXLService {
         if(j === 0) {
           data[i].manufacturer = data[i].numbers[j].manufacturerFullName;
           data[i].numberMain = data[i].numbers[j].number;
+          data[i].numbersString += `${data[i].numbers[j].number}`;
+        } else {
+          data[i].numbersString += ` / ${data[i].numbers[j].number}`;
         }
-        data[i].numbersString += `${data[i].numbers[j].number} `;
       }
       if (data[i].stock > 12) {
         data[i].stock = ">12";
