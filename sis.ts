@@ -21,7 +21,7 @@ var bodyParser = require('body-parser');
 // const httpServer = http.createServer(app);
 // httpServer.listen(myNodeConfig.serverPort, () => { });
 
-const httpsServer = https.createServer(myFileService.getCertificates(), app);
+const httpsServer = https.createServer(myFileService.certificate, app);
 httpsServer.listen(myNodeConfig.serverPort, () => { });
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));

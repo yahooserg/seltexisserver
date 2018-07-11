@@ -4,8 +4,11 @@ const fsConfig = new FsConfig();
 
 export class MyFileService {
 
+  certificate: any;
   constructor() {
-
+    let privateKey = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/privkey.pem`);
+    let certificate = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/fullchain.pem`);
+    this.certificate = {key: privateKey, cert: certificate};
   }
 
   public updateImage(company, image, partId, callback) {
@@ -54,9 +57,8 @@ export class MyFileService {
   }
 
   public getCertificates() {
-    let privateKey = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem`);
-    let certificate = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem`);
-    return {key: privateKey, cert: certificate};
+
+    return
   }
 
 }
