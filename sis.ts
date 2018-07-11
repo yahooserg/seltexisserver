@@ -2,6 +2,7 @@
 import * as express from 'express';
 import { Application } from 'express';
 // import * as http from 'http';
+import * as fs from 'fs';
 import * as https from 'https';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
@@ -21,7 +22,10 @@ var bodyParser = require('body-parser');
 // const httpServer = http.createServer(app);
 // httpServer.listen(myNodeConfig.serverPort, () => { });
 
-const httpsServer = https.createServer(myFileService.getCertificates(), app);
+let privateKey = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/privkey.pem`);
+let certificate = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/fullchain.pem`);
+let credentials = {key: privateKey, cert: certificate};
+const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(myNodeConfig.serverPort, () => { });
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
