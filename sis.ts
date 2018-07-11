@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
 
 app.use(function(req, res, next) {
-  var allowedOrigins = ['http://1.local', 'https://fvolchek.net', 'https://www.fvolchek.net', 'http://localhost:4200', 'http://seltex.ru', 'http://www.seltex.ru'],
+  var allowedOrigins = ['http://1.local', 'http://localhost:4200', 'https://seltex.ru', 'https://www.seltex.ru'],
   origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
