@@ -54,8 +54,8 @@ export class MyFileService {
   }
 
   public getCertificates() {
-    let privateKey = fs.readFileSync(`/../ssl.key`);
-    let certificate = fs.readFileSync(`/../ssl.crt`);
+    let privateKey = fs.readFileSync(`./../../ssl.key`);
+    let certificate = fs.readFileSync(`./../../ssl.crt`);
     return {key: privateKey, cert: certificate};
   }
 
