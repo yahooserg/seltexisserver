@@ -54,8 +54,8 @@ export class MyFileService {
   }
 
   public getCertificates() {
-    let privateKey = fs.readFileSync(`${__dirname}/../../ssl.key`);
-    let certificate = fs.readFileSync(`${__dirname}/../../ssl.crt`);
+    let privateKey = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem`);
+    let certificate = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem`);
     return {key: privateKey, cert: certificate};
   }
 
