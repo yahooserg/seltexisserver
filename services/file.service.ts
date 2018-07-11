@@ -49,14 +49,13 @@ export class MyFileService {
 
     // console.log(file)
     // if (fs.existsSync(file)) {
-    //   callback({exists:true});/etc/letsencrypt/live/seltex.ru/privkey.pem
+    //   callback({exists:true});/etc/letsencrypt/live/seltex.ru/privkey.pem fullchain
     // }
   }
 
   public getCertificates() {
-    console.log(__dirname);
-    let privateKey = fs.readFileSync('../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem');
-    let certificate = fs.readFileSync('../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem');
+    let privateKey = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem`);
+    let certificate = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem`);
     return {key: privateKey, cert: certificate};
   }
 
