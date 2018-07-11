@@ -54,8 +54,8 @@ export class MyFileService {
   }
 
   public getCertificates() {
-    let privateKey = fs.readFileSync(`${__dirname}/../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem`);
-    let certificate = fs.readFileSync(`${__dirname}/../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem`);
+    let privateKey = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/privkey.pem`);
+    let certificate = fs.readFileSync(`${__dirname}/../../../../../../etc/letsencrypt/live/seltex.ru/fullchain.pem`);
     return {key: privateKey, cert: certificate};
   }
 
