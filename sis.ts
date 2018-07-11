@@ -1,7 +1,8 @@
 ///<reference path="./node_modules/@types/node/index.d.ts"/>
 import * as express from 'express';
 import { Application } from 'express';
-import * as http from 'http';
+// import * as http from 'http';
+import * as https from 'https';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
 import { MySqlService } from './services/mysql.service';
@@ -17,8 +18,11 @@ const myAWSService = new MyAWSService();
 const app: Application = express();
 var bodyParser = require('body-parser');
 
-const httpServer = http.createServer(app);
-httpServer.listen(myNodeConfig.serverPort, () => { });
+// const httpServer = http.createServer(app);
+// httpServer.listen(myNodeConfig.serverPort, () => { });
+
+const httpsServer = https.createServer(myFileService.getCertificates(), app);
+httpsServer.listen(myNodeConfig.serverPort, () => { });
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
