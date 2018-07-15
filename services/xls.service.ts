@@ -112,13 +112,14 @@ export class MyXLService {
     let priceUpdatedOnInfo: string = myFunctions.getDateString();
     worksheet.cell(1,5).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
 
-
+    let k: number = 0;
     for (let i: number = 0; i < data.length; i += 1) {
       for(let j: number = 1; j < data[i].numbers.length; j += 1) {
-          worksheet.cell(i+2,1).string(`${data[i].numbers[0].manufacturerFullName}`).style(style);
-          worksheet.cell(i+2,2).string(`${data[i].numbers[0].number}`).style(style);
-          worksheet.cell(i+2,3).string(`${data[i].numbers[j].manufacturerFullName}`).style(style);
-          worksheet.cell(i+2,4).string(`${data[i].numbers[j].number}`).style(style);
+          worksheet.cell(k+2,1).string(`${data[i].numbers[0].manufacturerFullName}`).style(style);
+          worksheet.cell(k+2,2).string(`${data[i].numbers[0].number}`).style(style);
+          worksheet.cell(k+2,3).string(`${data[i].numbers[j].manufacturerFullName}`).style(style);
+          worksheet.cell(k+2,4).string(`${data[i].numbers[j].number}`).style(style);
+          k += 1;
       }
     }
 
