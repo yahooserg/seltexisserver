@@ -208,7 +208,13 @@ app.get('/api/createxlprice', function(req, res) {
       } else {
         myXLService.createXLPrice(priceListData, (xlFile)=>{
           myAWSService.uploadPrice(xlFile, ()=>{
-            mySqlService.priceListCreateFinish(1, ()=>{
+            myXLService.createXLCross(priceListData, (xlFile)=>{
+              myAWSService.uploadCross(xlFile, ()=>{
+
+                mySqlService.priceListCreateFinish(1, ()=>{
+                });
+
+              });
             });
           });
         });

@@ -11,8 +11,19 @@ export class MyXLService {
 
   public createXLPrice(data, callback) {
     let workbook = new xl.Workbook();
+    let workbook2 = new xl.Workbook();
+
     let worksheet = workbook.addWorksheet('SeltexPrice');
+    let worksheet2 = workbook2.addWorksheet('SeltexPrice');
+
     let style = workbook.createStyle({
+      font: {
+        // color: '#FF0800',
+        size: 12
+      }
+    });
+
+    let style2 = workbook2.createStyle({
       font: {
         // color: '#FF0800',
         size: 12
@@ -28,6 +39,11 @@ export class MyXLService {
     worksheet.cell(1,6).string('price').style(style);
     worksheet.cell(1,7).string('stock').style(style);
     worksheet.cell(1,8).string('in transit').style(style);
+
+    worksheet2.cell(1,1).string('manufacturer').style(style);
+    worksheet2.cell(1,2).string('number').style(style);
+    worksheet2.cell(1,3).string('crossmanufacturer').style(style);
+    worksheet2.cell(1,4).string('crossnumber').style(style);
 
     let priceUpdatedOnInfo: string = myFunctions.getDateString();
     worksheet.cell(1,9).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
@@ -66,6 +82,44 @@ export class MyXLService {
       worksheet.cell(i+2,7).string(data[i].stock).style(style);
       worksheet.cell(i+2,8).string(data[i].ordered).style(style);
 
+    }
+
+    workbook.writeToBuffer().then((buffer) => {
+      callback(buffer);
+    });
+
+  }
+
+  public createXLCross(data, callback) {
+    let workbook = new xl.Workbook();
+    let worksheet = workbook.addWorksheet('SeltexPrice');
+
+    let style = workbook.createStyle({
+      font: {
+        // color: '#FF0800',
+        size: 12
+      }
+    });
+
+
+
+
+    worksheet.cell(1,1).string('manufacturer').style(style);
+    worksheet.cell(1,2).string('number').style(style);
+    worksheet.cell(1,3).string('crossmanufacturer').style(style);
+    worksheet.cell(1,4).string('crossnumber').style(style);
+
+    let priceUpdatedOnInfo: string = myFunctions.getDateString();
+    worksheet.cell(1,5).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
+
+
+    for (let i: number = 0; i < data.length; i += 1) {
+      for(let j: number = 1; j < data[i].numbers.length; j += 1) {
+          worksheet.cell(i+2,1).string(`${data[i].numbers[0].manufacturerFullName}`).style(style);
+          worksheet.cell(i+2,2).string(`${data[i].numbers[0].number}`).style(style);
+          worksheet.cell(i+2,3).string(`${data[i].numbers[j].manufacturerFullName}`).style(style);
+          worksheet.cell(i+2,4).string(`${data[i].numbers[j].number}`).style(style);
+      }
     }
 
     workbook.writeToBuffer().then((buffer) => {
