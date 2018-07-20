@@ -70,7 +70,7 @@ export class MyXLService {
       if (data[i].ordered > 12) {
         data[i].ordered = ">12";
       } else {
-        data[i].ordered = `${data[i].stock}`;
+        data[i].ordered = `${data[i].ordered}`;
       }
 
       worksheet.cell(i+2,1).number(data[i].id).style(style);
