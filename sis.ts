@@ -224,9 +224,11 @@ app.get('/api/createxlprice', function(req, res) {
 });
 
 app.get('/api/pricelistcreatestatus', function(req, res) {
-  mySqlService.priceListCreateGetStatus(1, (data) => {
-    res.send(data);
-  });
+  // mySqlService.priceListCreateGetStatus(1, (data) => {
+    // res.send(data);
+  // });
+  res.send({"value":"0"});
+
 });
 
 // app.get('/api/tempfunc', function(req, res) {
