@@ -227,7 +227,7 @@ app.get('/api/pricelistcreatestatus', function(req, res) {
   // mySqlService.priceListCreateGetStatus(1, (data) => {
     // res.send(data);
   // });
-  res.send({"value":"0"});
+  res.send([{"value":"0"}]);
 
 });
 
