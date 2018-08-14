@@ -557,12 +557,13 @@ export class MySqlService {
               // console.log(`${currentLines}/${lines}`);
               if(lines === currentLines) {
                 callback(items);
-                connection.end();
               }
             });
-
+            connection.end();
         }
       });
+      connection.end();
+
   }
 
   public priceListCreateStart(company, callback) {
@@ -586,7 +587,6 @@ export class MySqlService {
   };
 
   public priceListCreateFinish(company, callback) {
-    let items = [];
     let query = `call priceListCreateFinish('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
