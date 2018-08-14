@@ -559,15 +559,14 @@ export class MySqlService {
                 callback(items);
               }
             });
-            connection.end();
+            // connection.end();
         }
       });
-      connection.end();
+      // connection.end();
 
   }
 
   public priceListCreateStart(company, callback) {
-    let items = [];
     let query = `call priceListCreateStart('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
