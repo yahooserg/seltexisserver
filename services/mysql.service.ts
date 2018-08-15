@@ -559,12 +559,9 @@ export class MySqlService {
                 callback(items);
               }
             });
-            connection.end();
-
         }
       });
-      connection.end();
-      
+
   }
 
   public priceListCreateStart(company, callback) {
