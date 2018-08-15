@@ -59,7 +59,7 @@ export class MySqlService {
         } else callback(items);
       });
 
-    //connection.end();
+    connection.end();
   }
 
 
@@ -83,7 +83,7 @@ export class MySqlService {
         user.rights = items;
         callback(user);
       });
-    //connection.end();
+    connection.end();
   }
 
   logIn(data, callback) {
@@ -119,7 +119,7 @@ export class MySqlService {
         }
 
       });
-    //connection.end();
+    connection.end();
   }
 
   logInUser(data, rights, callback) {
@@ -149,7 +149,7 @@ export class MySqlService {
           callback(false);
         }
       });
-    //connection.end();
+    connection.end();
   }
 
   checkUserLoggedIn(user, email, token, company, callback) {
@@ -185,7 +185,7 @@ export class MySqlService {
         }
 
       });
-    //connection.end();
+    connection.end();
   }
 
   checkUserLoggedInNext(user, token, callback) {
@@ -213,7 +213,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items[0]);
       });
-    //connection.end();
+    connection.end();
   }
 
   getManufacturers(company, callback) {
@@ -230,7 +230,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   getAllInventory(company, callback) {
@@ -247,7 +247,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   getLast100Inventory(company, callback) {
@@ -264,7 +264,7 @@ export class MySqlService {
         // items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   getInventory(company, id, callback) {
@@ -281,7 +281,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   getInventoryNumbers(company, id, callback) {
@@ -300,7 +300,7 @@ export class MySqlService {
         callback(items);
         // console.log(items);
       });
-    //connection.end();
+    connection.end();
 
   }
 
@@ -321,7 +321,7 @@ export class MySqlService {
         // items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateInventoryNumber(company, numberId, newNumber, newManufacturer, callback) {
@@ -338,7 +338,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateInventoryMainNumber(company, numberId, inventoryId, callback) {
@@ -355,7 +355,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   saveInventoryNewNumber(company, partId, newNumber, newManufacturer, callback) {
@@ -372,7 +372,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   deleteInventoryNumber(company, numberId, callback) {
@@ -389,7 +389,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateInventoryDescription(company, inventoryId, newDescription, callback) {
@@ -406,7 +406,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateInventoryComment(company, inventoryId, newComment, callback) {
@@ -423,7 +423,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateInventoryWeight(company, inventoryId, newWeight, callback) {
@@ -440,7 +440,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateManufacturer(company, id, name, fullName, callback) {
@@ -457,7 +457,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   deleteManufacturer(company, id, callback) {
@@ -474,7 +474,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   addManufacturer(company, newName, newFullName, callback) {
@@ -494,7 +494,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    //connection.end();
+    connection.end();
   }
 
   updateImage(company, image, callback) {
@@ -519,7 +519,7 @@ export class MySqlService {
 
         callback(JSON.stringify(bufferBase64));
       });
-    //connection.end();
+    connection.end();
   }
 
   getPriceListData(company, callback) {
@@ -557,16 +557,18 @@ export class MySqlService {
               // console.log(`${currentLines}/${lines}`);
               if(lines === currentLines) {
                 callback(items);
-                // connection.end();
               }
             });
+            connection.end();
 
         }
       });
-
+      connection.end();
+      
   }
 
   public priceListCreateStart(company, callback) {
+    let items = [];
     let query = `call priceListCreateStart('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -582,11 +584,11 @@ export class MySqlService {
         // items.splice(items.length - 1, 1);
         callback();
       });
-    // connection.end();
+    connection.end();
   };
 
   public priceListCreateFinish(company, callback) {
-    // let items = [];
+    let items = [];
     let query = `call priceListCreateFinish('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -602,8 +604,7 @@ export class MySqlService {
         // items.splice(items.length - 1, 1);
         callback();
       });
-      // connection.end();
-
+    connection.end();
   };
 
   public priceListCreateGetStatus(company, callback) {
@@ -623,7 +624,7 @@ export class MySqlService {
         items.splice(items.length - 1, 1);
         callback(items);
       });
-    // connection.end();
+    connection.end();
   };
 
 
