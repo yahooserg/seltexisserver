@@ -563,7 +563,7 @@ export class MySqlService {
 
         }
       });
-      
+
   }
 
   public priceListCreateStart(company, callback) {
@@ -587,7 +587,7 @@ export class MySqlService {
   };
 
   public priceListCreateFinish(company, callback) {
-    let items = [];
+    // let items = [];
     let query = `call priceListCreateFinish('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -602,8 +602,8 @@ export class MySqlService {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
         callback();
+        connection.end();
       });
-    connection.end();
   };
 
   public priceListCreateGetStatus(company, callback) {
