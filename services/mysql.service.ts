@@ -551,12 +551,15 @@ export class MySqlService {
               numbers[numbers.length] = row;
             })
             .on('end', () => {
+
               numbers.splice(numbers.length - 1, 1);
               items[i].numbers = numbers;
               currentLines += 1;
               // console.log(`${currentLines}/${lines}`);
               if(lines === currentLines) {
+                connection.end();
                 callback(items);
+
               }
             });
         }
