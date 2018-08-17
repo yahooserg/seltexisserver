@@ -524,7 +524,7 @@ export class MySqlService {
 
   getPriceListData(company, callback) {
     let items = [];
-    let query = `SELECT * FROM seltexru.inventory where (description like '%cat%' or comment like '%cat%' or description like '%prodiesel%' or comment like '%prodiesel%') and (description not like '%core%' and comment not like '%core%')`;
+    let query = `SELECT * FROM seltexru.inventory where (description like '%cat%' or comment like '%cat%' or description like '%prodiesel%' or comment like '%prodiesel%') and (description not like '%core%' and comment not like '%core%') limit 10`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
