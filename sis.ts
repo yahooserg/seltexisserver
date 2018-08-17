@@ -204,11 +204,11 @@ app.get('/api/createxlprice', function(req, res) {
   res.send({res: "OK"});
   mySqlService.priceListCreateStart(1, ()=>{
     mySqlService.getPriceListData(req.params.company, (priceListData) => {
-      for (let i: number = 0, z: number = 0; i < priceListData.length; i+= 1){
-        mySqlService.getInventoryNumbers(1, priceListData[i].id, (numbers) => {
-          z += 1;
-          priceListData[i].numbers = numbers;
-          if (z === priceListData.length){
+      // for (let i: number = 0, z: number = 0; i < priceListData.length; i+= 1){
+      //   mySqlService.getInventoryNumbers(1, priceListData[i].id, (numbers) => {
+      //     z += 1;
+      //     priceListData[i].numbers = numbers;
+      //     if (z === priceListData.length){
             myXLService.createXLPrice(priceListData, (xlFile)=>{
               myAWSService.uploadPrice(xlFile, ()=>{
                 myXLService.createXLCross(priceListData, (xlFile)=>{
@@ -219,11 +219,9 @@ app.get('/api/createxlprice', function(req, res) {
                 });
               });
             });
-          }
-        });
-
-
-      }
+      //     }
+      //   });
+      // }
 
     });
   })
