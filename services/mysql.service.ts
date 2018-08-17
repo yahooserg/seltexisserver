@@ -538,6 +538,8 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
+        connection.end();
+
         callback(items);
 
         // let lines: number = items.length;
@@ -566,7 +568,6 @@ export class MySqlService {
 
         // }
       });
-      // connection.end();
 
   }
 
