@@ -540,8 +540,9 @@ export class MySqlService {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
 
-        this.getAllNumbersForPrice(items,0);
-        callback(items);
+        this.getAllNumbersForPrice(items,0, () => {
+          callback(items);
+        });
 
         // let lines: number = items.length;
         // let currentLines: number = 0;
@@ -572,12 +573,14 @@ export class MySqlService {
 
   }
 
-  private getAllNumbersForPrice (items, i) {
+  private getAllNumbersForPrice (items, i, callback) {
     this.getNumbersForPrice(items[i].id, (data) => {
       items[i].numbers = data;
       i += 1;
       if (i < items.length) {
-        this.getAllNumbersForPrice(items, i)
+        this.getAllNumbersForPrice(items, i, callback)
+      } else {
+        callback();
       }
     });
 
