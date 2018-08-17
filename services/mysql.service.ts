@@ -532,8 +532,8 @@ export class MySqlService {
         console.log(err);
       })
       .on('result', (row) => {
+        row.numbers = [];
         items = row;
-        items[items.length].numbers = [];
         // console.log(row)
       })
       .on('end', () => {
