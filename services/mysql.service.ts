@@ -540,6 +540,7 @@ export class MySqlService {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
 
+        this.getAllNumbersForPrice(items);
         callback(items);
 
         // let lines: number = items.length;
@@ -572,8 +573,23 @@ export class MySqlService {
 
   }
 
-  public getAllNumbersForPrice (items) {
-    items = 0;
+  private getAllNumbersForPrice (items) {
+    let myPoolConnection: any =mySqlConnection;
+    myPoolConnection.connectionLimit = 10;
+    let pool = mysql.createPool(myPoolConnection);
+    let lines: number = items.length;
+    for (let i: number = 0; i < lines; i += 1) {
+      let numbers = [];
+      let query = `call getInventoryNumbers(${items[i].id})`;
+      pool.query(query, function (error, results, fields) {
+        if (error) throw error;
+        for (let j: number = 0; j < results.length; j += 1) {
+          numbers[numbers.length] = results[j];
+        }
+        items[i].numbers = numbers;
+      });
+    }
+    // return items;
   }
 
   public priceListCreateStart(company, callback) {
