@@ -533,7 +533,7 @@ export class MySqlService {
       })
       .on('result', (row) => {
         row.numbers = [];
-        items = row;
+        items[items.length] = row;
         // console.log(row)
       })
       .on('end', () => {
