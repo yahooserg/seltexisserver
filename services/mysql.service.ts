@@ -287,7 +287,7 @@ export class MySqlService {
   getInventoryNumbers(company, id, callback) {
     // console.log("heyhey")
     let items = [];
-    let query = `call getInventoryNumbers(${id})`;
+    let query = `call getInventoryNumbers('${id}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
