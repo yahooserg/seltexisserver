@@ -557,13 +557,16 @@ export class MySqlService {
               currentLines += 1;
               // console.log(`${currentLines}/${lines}`);
               if(lines === currentLines) {
-                connection.end();
+                // connection.end();
                 callback(items);
 
               }
             });
+            connection.end();
+
         }
       });
+      connection.end();
 
   }
 
