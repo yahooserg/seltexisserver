@@ -585,6 +585,7 @@ export class MySqlService {
 
   private getNumbersForPrice (itemId, callback) {
     this.getInventoryNumbers(1,itemId, (data)=>{
+      console.log(data)
       callback(data);
     })
   }
