@@ -524,7 +524,7 @@ export class MySqlService {
 
   getPriceListData(company, callback) {
     let items = [];
-    let query = `SELECT * FROM seltexru.inventory where (description like '%cat%' or comment like '%cat%' or description like '%prodiesel%' or comment like '%prodiesel%') and (description not like '%core%' and comment not like '%core%') limit 10`;
+    let query = `SELECT * FROM seltexru.inventory where (description like '%cat%' or comment like '%cat%' or description like '%prodiesel%' or comment like '%prodiesel%') and (description not like '%core%' and comment not like '%core%')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
@@ -539,36 +539,9 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
-
         this.getAllNumbersForPrice(items,0, () => {
           callback(items);
         });
-
-        // let lines: number = items.length;
-        // let currentLines: number = 0;
-        // for (let i: number = 0; i < lines; i += 1) {
-        //   let numbers = [];
-        //   query = `call getInventoryNumbers(${items[i].id})`;
-        //   request = connection.query(query);
-        //   request
-        //     .on('result', (row) => {
-        //       numbers[numbers.length] = row;
-        //     })
-        //     .on('end', () => {
-        //
-        //       numbers.splice(numbers.length - 1, 1);
-        //       items[i].numbers = numbers;
-        //       currentLines += 1;
-        //       // console.log(`${currentLines}/${lines}`);
-        //       if(lines === currentLines) {
-        //         // connection.end();
-        //         callback(items);
-        //
-        //       }
-        //     });
-        //     connection.end();
-
-        // }
       });
 
   }

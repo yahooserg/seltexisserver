@@ -204,35 +204,25 @@ app.get('/api/createxlprice', function(req, res) {
   res.send({res: "OK"});
   mySqlService.priceListCreateStart(1, ()=>{
     mySqlService.getPriceListData(req.params.company, (priceListData) => {
-      console.log(priceListData);
-      // for (let i: number = 0, z: number = 0; i < priceListData.length; i+= 1){
-      //   mySqlService.getInventoryNumbers(1, priceListData[i].id, (numbers) => {
-      //     z += 1;
-      //     priceListData[i].numbers = numbers;
-      //     if (z === priceListData.length){
-            myXLService.createXLPrice(priceListData, (xlFile)=>{
-              myAWSService.uploadPrice(xlFile, ()=>{
-                myXLService.createXLCross(priceListData, (xlFile)=>{
-                  myAWSService.uploadCross(xlFile, ()=>{
-                    mySqlService.priceListCreateFinish(1, ()=>{
-                    });
-                  });
-                });
+      myXLService.createXLPrice(priceListData, (xlFile)=>{
+        myAWSService.uploadPrice(xlFile, ()=>{
+          myXLService.createXLCross(priceListData, (xlFile)=>{
+            myAWSService.uploadCross(xlFile, ()=>{
+              mySqlService.priceListCreateFinish(1, ()=>{
               });
             });
-      //     }
-      //   });
-      // }
-
+          });
+        });
+      });
     });
   })
 });
 
 app.get('/api/pricelistcreatestatus', function(req, res) {
-  // mySqlService.priceListCreateGetStatus(1, (data) => {
-    // res.send(data);
-  // });
-  res.send([{"value":"0"}]);
+  mySqlService.priceListCreateGetStatus(1, (data) => {
+    res.send(data);
+  });
+  // res.send([{"value":"0"}]);
 
 });
 
