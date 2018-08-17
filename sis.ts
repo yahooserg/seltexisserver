@@ -201,24 +201,30 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
+  res.send({res: "OK"});
   mySqlService.priceListCreateStart(1, ()=>{
     mySqlService.getPriceListData(req.params.company, (priceListData) => {
-      if(priceListData === "OK") {
-        res.send({res: "OK"});
-      } else {
-        myXLService.createXLPrice(priceListData, (xlFile)=>{
-          myAWSService.uploadPrice(xlFile, ()=>{
-            myXLService.createXLCross(priceListData, (xlFile)=>{
-              myAWSService.uploadCross(xlFile, ()=>{
-
-                mySqlService.priceListCreateFinish(1, ()=>{
+      for (let i: number = 0, z: number = 0; i < priceListData.length; i+= 1){
+        mySqlService.getInventoryNumbers(1, priceListData[i].id, (numbers) => {
+          z += 1;
+          priceListData[i].numbers = numbers;
+          if (z === priceListData.length){
+            myXLService.createXLPrice(priceListData, (xlFile)=>{
+              myAWSService.uploadPrice(xlFile, ()=>{
+                myXLService.createXLCross(priceListData, (xlFile)=>{
+                  myAWSService.uploadCross(xlFile, ()=>{
+                    mySqlService.priceListCreateFinish(1, ()=>{
+                    });
+                  });
                 });
-
               });
             });
-          });
+          }
         });
+
+
       }
+
     });
   })
 });

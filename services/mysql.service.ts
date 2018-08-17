@@ -538,33 +538,33 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
-        callback("OK");
+        callback(items);
 
-        let lines: number = items.length;
-        let currentLines: number = 0;
-        for (let i: number = 0; i < lines; i += 1) {
-          let numbers = [];
-          query = `call getInventoryNumbers(${items[i].id})`;
-          request = connection.query(query);
-          request
-            .on('result', (row) => {
-              numbers[numbers.length] = row;
-            })
-            .on('end', () => {
+        // let lines: number = items.length;
+        // let currentLines: number = 0;
+        // for (let i: number = 0; i < lines; i += 1) {
+        //   let numbers = [];
+        //   query = `call getInventoryNumbers(${items[i].id})`;
+        //   request = connection.query(query);
+        //   request
+        //     .on('result', (row) => {
+        //       numbers[numbers.length] = row;
+        //     })
+        //     .on('end', () => {
+        //
+        //       numbers.splice(numbers.length - 1, 1);
+        //       items[i].numbers = numbers;
+        //       currentLines += 1;
+        //       // console.log(`${currentLines}/${lines}`);
+        //       if(lines === currentLines) {
+        //         // connection.end();
+        //         callback(items);
+        //
+        //       }
+        //     });
+        //     connection.end();
 
-              numbers.splice(numbers.length - 1, 1);
-              items[i].numbers = numbers;
-              currentLines += 1;
-              // console.log(`${currentLines}/${lines}`);
-              if(lines === currentLines) {
-                // connection.end();
-                callback(items);
-
-              }
-            });
-            connection.end();
-
-        }
+        // }
       });
       connection.end();
 
