@@ -575,7 +575,7 @@ export class MySqlService {
 
   private getAllNumbersForPrice (items) {
     let myPoolConnection: any =mySqlConnection;
-    myPoolConnection.connectionLimit = 10;
+    myPoolConnection.connectionLimit = 100;
     let pool = mysql.createPool(myPoolConnection);
     let lines: number = items.length;
     for (let i: number = 0; i < lines; i += 1) {
@@ -589,7 +589,9 @@ export class MySqlService {
         items[i].numbers = numbers;
       });
     }
-    // return items;
+    pool.end(function (err) {
+      // all connections in the pool have ended
+    });
   }
 
   public priceListCreateStart(company, callback) {
