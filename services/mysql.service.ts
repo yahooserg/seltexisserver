@@ -573,7 +573,7 @@ export class MySqlService {
   }
 
   private getAllNumbersForPrice (items, i) {
-    this.getNumbersForPrice(items[i], (data) => {
+    this.getNumbersForPrice(items[i].id, (data) => {
       items[i].numbers = data;
       i += 1;
       if (i < items.length) {
