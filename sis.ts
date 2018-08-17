@@ -204,6 +204,7 @@ app.get('/api/createxlprice', function(req, res) {
   res.send({res: "OK"});
   mySqlService.priceListCreateStart(1, ()=>{
     mySqlService.getPriceListData(req.params.company, (priceListData) => {
+      console.log(priceListData);
       // for (let i: number = 0, z: number = 0; i < priceListData.length; i+= 1){
       //   mySqlService.getInventoryNumbers(1, priceListData[i].id, (numbers) => {
       //     z += 1;
