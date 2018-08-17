@@ -566,7 +566,7 @@ export class MySqlService {
 
         // }
       });
-      connection.end();
+      // connection.end();
 
   }
 
