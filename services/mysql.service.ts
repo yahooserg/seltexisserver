@@ -543,6 +543,8 @@ export class MySqlService {
           callback(items);
         });
       });
+      connection.end();
+      
 
   }
 
