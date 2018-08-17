@@ -539,7 +539,6 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
-        connection.end();
 
         callback(items);
 
@@ -569,7 +568,12 @@ export class MySqlService {
 
         // }
       });
+      connection.end();
 
+  }
+
+  public getAllNumbersForPrice (items) {
+    items = 0;
   }
 
   public priceListCreateStart(company, callback) {
