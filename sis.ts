@@ -17,7 +17,7 @@ const myXLService = new MyXLService();
 import {MyAWSService} from './services/aws.service';
 const myAWSService = new MyAWSService();
 const app: Application = express();
-var bodyParser = require('body-parser');
+let bodyParser = require('body-parser');
 
 // const httpServer = http.createServer(app);
 // httpServer.listen(myNodeConfig.serverPort, () => { });
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
 
 app.use(function(req, res, next) {
-  var allowedOrigins = ['https://seltex.ru', 'https://www.seltex.ru'],
+  let allowedOrigins = ['https://seltex.ru', 'https://www.seltex.ru'],
   origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
