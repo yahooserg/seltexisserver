@@ -16,6 +16,24 @@ export class MyAWSService {
 
   }
 
+  public getPriceUpdateDate(data, callback) {
+
+
+    s3.headObject({
+      Bucket: 'pricelist.seltex.ru',
+      Key: 'SeltexPrice.xlsx'
+    },function (err, data) {
+      if (err) {
+        callback(err);
+      }
+      if (data) {
+        console.log(data);
+        callback(data)
+
+      }
+    });
+  }
+
   public uploadPrice(data, callback) {
 
 
