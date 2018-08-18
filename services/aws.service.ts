@@ -16,7 +16,7 @@ export class MyAWSService {
 
   }
 
-  public getPriceUpdateDate(data, callback) {
+  public getPriceUpdateDate(callback) {
 
 
     s3.headObject({
@@ -27,9 +27,7 @@ export class MyAWSService {
         callback(err);
       }
       if (data) {
-        console.log(data);
         callback(data)
-
       }
     });
   }

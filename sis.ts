@@ -202,28 +202,27 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 
 app.get('/api/createxlprice', function(req, res) {
   res.send({res: "OK"});
-  mySqlService.priceListCreateStart(1, ()=>{
+  // mySqlService.priceListCreateStart(1, ()=>{
     mySqlService.getPriceListData(req.params.company, (priceListData) => {
       myXLService.createXLPrice(priceListData, (xlFile)=>{
         myAWSService.uploadPrice(xlFile, ()=>{
           myXLService.createXLCross(priceListData, (xlFile)=>{
             myAWSService.uploadCross(xlFile, ()=>{
-              mySqlService.priceListCreateFinish(1, ()=>{
-              });
+              // mySqlService.priceListCreateFinish(1, ()=>{
+              // });
             });
           });
         });
       });
     });
-  })
+  // })
 });
 
-app.get('/api/pricelistcreatestatus', function(req, res) {
-  // mySqlService.priceListCreateGetStatus(1, (data) => {
-  //   res.send(data);
-  // });
-  res.send([{"value":"0"}]);
-
+app.get('/api/getpricelistupdatedate', function(req, res) {
+  myAWSService.getPriceUpdateDate((data)=>{
+    console.log(data)
+    res.send(data);
+  });
 });
 
 // app.get('/api/tempfunc', function(req, res) {
