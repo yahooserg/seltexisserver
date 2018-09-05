@@ -11,10 +11,10 @@ export class MyXLService {
 
   public createXLPrice(data, callback) {
     let workbook = new xl.Workbook();
-    let workbook2 = new xl.Workbook();
+    // let workbook2 = new xl.Workbook();
 
     let worksheet = workbook.addWorksheet('SeltexPrice');
-    let worksheet2 = workbook2.addWorksheet('SeltexPrice');
+    // let worksheet2 = workbook2.addWorksheet('SeltexPrice');
 
     let style = workbook.createStyle({
       font: {
@@ -23,12 +23,12 @@ export class MyXLService {
       }
     });
 
-    let style2 = workbook2.createStyle({
-      font: {
-        // color: '#FF0800',
-        size: 12
-      }
-    });
+    // let style2 = workbook2.createStyle({
+    //   font: {
+    //     // color: '#FF0800',
+    //     size: 12
+    //   }
+    // });
 
     // numberFormat: '$#,##0.00; ($#,##0.00); -'
     worksheet.cell(1,1).string('id').style(style);
@@ -41,13 +41,13 @@ export class MyXLService {
     worksheet.cell(1,8).string('stockspb').style(style);
     worksheet.cell(1,9).string('in transit').style(style);
 
-    worksheet2.cell(1,1).string('manufacturer').style(style);
-    worksheet2.cell(1,2).string('number').style(style);
-    worksheet2.cell(1,3).string('crossmanufacturer').style(style);
-    worksheet2.cell(1,4).string('crossnumber').style(style);
+    // worksheet2.cell(1,1).string('manufacturer').style(style);
+    // worksheet2.cell(1,2).string('number').style(style);
+    // worksheet2.cell(1,3).string('crossmanufacturer').style(style);
+    // worksheet2.cell(1,4).string('crossnumber').style(style);
 
     let priceUpdatedOnInfo: string = myFunctions.getDateString();
-    worksheet.cell(1,9).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
+    worksheet.cell(1,10).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
 
 
     for (let i: number = 0; i < data.length; i += 1) {
