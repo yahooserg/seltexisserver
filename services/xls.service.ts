@@ -68,6 +68,12 @@ export class MyXLService {
         data[i].stock = `${data[i].stock}`;
       }
 
+      if (data[i].msk > 12) {
+        data[i].msk = ">12";
+      } else {
+        data[i].msk = `${data[i].msk}`;
+      }
+
       if (data[i].ordered > 12) {
         data[i].ordered = ">12";
       } else {
