@@ -544,7 +544,7 @@ export class MySqlService {
         });
       });
       connection.end();
-      
+
 
   }
 
@@ -705,53 +705,74 @@ export class MySqlService {
   //     });
   // }
 
+
+  /////////////////////
+  /// THIS FUNCTION ADDS ALL NUMBERS TO ALL CROSSES
+  ///////////////////
   // tempFunc(callback) {
   //   let items = [];
   //   let qty = 0;
-  //   let regex = /[0-9]{3,12}/;
+  //   // let regex = /[0-9]{3,12}/;
+  //   //
+  //   // let regex2 = /Volvo/;
   //
-  //   let regex2 = /Volvo/;
-  //
-  //   let query = `select inventory.id, inventory.description from inventory, inventoryNumbers where inventory.id = inventoryNumbers.inventoryId and inventory.description like '%Volvo%' and inventory.description not like '%cat%' and inventory.description not like '%prodiesel%'`;
+  //   let query = `select inventory.id, inventory.description as d, inventoryNumbers.number as n, inventoryNumbers.manufacturerId as m from inventory, inventoryNumbers where inventory.id = inventoryNumbers.inventoryId and comment like '%cat%' and inventoryNumbers.number not like '%core%' limit 4000, 2500`;
   //   let connection = mysql.createConnection(mySqlConnection);
   //   let request = connection.query(query);
   //
   //
   //   request
   //     .on('result', (row, indexRow) => {
-  //       qty += 1;
-  //       // items[items.length] = row;
-  //       if(regex2.test(row.description)){
-  //         // console.log(row.description)
-  //         let index = row.description.indexOf("Volvo");
-  //         row.comment = row.description.substring(index);
-  //         row.description = row.description.substring(0, index - 1);
-  //         let regOutput = regex.exec(row.comment);
-  //         // console.log(row.description,';')
-  //         // console.log(row.comment,';')
-  //         // console.log(regOutput)
   //
-  //         if (regOutput){
-  //           row.comment = row.comment.substring(0,regOutput.index - 1);
+  //       // console.log(row)
+  //       row.otherNumbers = [];
+  //       query = `select * from inventoryNumbers where inventoryId = ${row.id} and number <> '${row.n}' and manufacturerId <> '${row.m}' order by main`;
+  //       let req = connection.query(query);
+  //       req
+  //       .on('result', (row2, indexRow) => {
+  //         query = `select distinct inventory.id, inventory.description, inventoryNumbers.id as numId from inventory, inventoryNumbers where inventory.id = inventoryNumbers.inventoryId and inventoryNumbers.number = '${row2.number}' and inventoryNumbers.inventoryId <> ${row2.inventoryId}`;
+  //         let req3 = connection.query(query);
+  //         req3
+  //         .on('result', (row3, indexRow) => {
+  //             qty += 1;
   //
-  //           // console.log(query);
-  //           // let request = connection.query(query);
-  //         }
-  //         query = `update inventoryComments set comment = '${row.comment}' where id = ${row.id}`;
-  //         // query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
-  //         connection.query(query);
-  //         // console.log(query);
-  //         query = `update inventoryDescription set description = '${row.description}' where id = ${row.id}`;
-  //         connection.query(query);
+  //           // query = `select id from inventoryNumbers where inventoryId = ${row3.id} and number = ${row.n}`;
+  //           // let req4 = connection.query(query);
+  //           // req4
+  //           // .on('result', (row4, indexRow) => {
+  //           //   qty += 1;
+  //           //
+  //           // })
+  //           // .on('end', () => {
+  //           //   if (!qty) {
+  //               query = `call addInventoryNewNumber2('${row3.id}', '${row.n}', '${row.m}')`;
+  //               connection.query(query);
+  //               console.log(qty," - ", query);
+  //           //   }
+  //           // });
   //
-  //         // console.log(query);
+  //         })
+  //         .on('end', () => {
+  //           // console.log(allIdsOfCrosses)
   //
-  //         // console.log('-------', qty);
-  //       }
+  //
+  //         });
+  //
+  //
+  //       })
+  //       .on('end', () => {
+  //         // console.log(row);
+  //
+  //
+  //       });
+  //       // console.log(query);
+  //
+  //
   //     })
   //     .on('end', () => {
   //       callback({"done":"allright"});
-  //       connection.end();
+  //       // callback();
+  //       // connection.end();
   //
   //     });
   // }

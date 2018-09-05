@@ -231,3 +231,11 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
 //     res.send(items);
 //   });
 // });
+
+// let tempFunc = function () {
+//   mySqlService.tempFunc((items) => {
+//       console.log(items)
+//
+//   });
+// }
+// tempFunc();
