@@ -80,9 +80,9 @@ export class MyXLService {
       worksheet.cell(i+2,4).string(`${data[i].numberMain}`).style(style);
       worksheet.cell(i+2,5).string(`${data[i].numbersString}`).style(style);
       worksheet.cell(i+2,6).number(data[i].price).style(style);
-      worksheet.cell(i+2,7).string(data[i].msk).style(style);
-      worksheet.cell(i+2,8).string(data[i].stock).style(style);
-      worksheet.cell(i+2,9).string(data[i].ordered).style(style);
+      worksheet.cell(i+2,7).string(`${data[i].msk}`).style(style);
+      worksheet.cell(i+2,8).string(`${data[i].stock}`).style(style);
+      worksheet.cell(i+2,9).string(`${data[i].ordered}`).style(style);
 
     }
 
