@@ -524,48 +524,54 @@ export class MySqlService {
 
   getPriceListData(company, callback) {
     let items = [];
-    let query = `SELECT i.id, i.description, i.comment, i.price, i.stock, i.ordered, i.msk FROM seltexru.inventory as i where (i.description like '%cat%' or i.comment like '%cat%' or i.description like '%prodiesel%' or i.comment like '%prodiesel%') and (i.description not like '%core%' and i.comment not like '%core%')`;
+    let query = `SELECT i.id, i.description, i.comment, i.price, i.stock, i.ordered, i.msk, n.number, m.fullName as manufacturerFullName, n.main FROM seltexru.inventory as i, seltexru.inventoryNumbers as n, seltexru.inventoryManufacturers as m where i.id = n.inventoryId and n.manufacturerId = m.id and (i.description like '%cat%' or i.comment like '%cat%' or i.description like '%prodiesel%' or i.comment like '%prodiesel%') and (i.description not like '%core%' and i.comment not like '%core%') limit 15`;
     let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('error', function(err) {
-        console.log(err);
-      })
-      .on('result', (row) => {
-        row.numbers = [];
-        items[items.length] = row;
-        // console.log(row)
-      })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        // items.splice(items.length - 1, 1);
-        this.getAllNumbersForPrice(items,0, () => {
-          callback(items);
-        });
-      });
-      connection.end();
+    connection.query(query, function (error, results, fields) {
+      let currentId: number = 0;
+      for (let i: number = 0; i < results.length; i += 1) {
+        if (currentId !== results[i].id) {
 
-
-  }
-
-  private getAllNumbersForPrice (items, i, callback) {
-    this.getNumbersForPrice(items[i].id, (data) => {
-      items[i].numbers = data;
-      i += 1;
-      if (i < items.length) {
-        this.getAllNumbersForPrice(items, i, callback)
-      } else {
-        callback();
+          currentId = results[i].id;
+          items[items.length] = results[i];
+          items[items.length-1].numbers = [];
+        }
+        if(results[i].main) {
+          items[items.length-1].numbers.unshift({
+            number: results[i].number,
+            manufacturerFullName: results[i].manufacturerFullName,
+            main: results[i].main
+          })
+        } else {
+          items[items.length-1].numbers[items[items.length-1].numbers.length] = {
+            number: results[i].number,
+            manufacturerFullName: results[i].manufacturerFullName,
+            main: results[i].main
+          }
+        }
       }
+      callback(items);
     });
-
+    connection.end();
   }
-
-  private getNumbersForPrice (itemId, callback) {
-    this.getInventoryNumbers(1,itemId, (data)=>{
-      callback(data);
-    })
-  }
+  // 
+  // private getAllNumbersForPrice (items, i, callback) {
+  //   this.getNumbersForPrice(items[i].id, (data) => {
+  //     items[i].numbers = data;
+  //     i += 1;
+  //     if (i < items.length) {
+  //       this.getAllNumbersForPrice(items, i, callback)
+  //     } else {
+  //       callback();
+  //     }
+  //   });
+  //
+  // }
+  //
+  // private getNumbersForPrice (itemId, callback) {
+  //   this.getInventoryNumbers(1,itemId, (data)=>{
+  //     callback(data);
+  //   })
+  // }
 
   public priceListCreateStart(company, callback) {
     let items = [];
@@ -775,6 +781,38 @@ export class MySqlService {
   //       // connection.end();
   //
   //     });
+  // }
+
+  // tempFunc(callback) {
+  //   let items = [];
+  //   let query = `SELECT i.id, i.description, i.comment, i.price, i.stock, i.ordered, i.msk, n.number, m.fullName as manufacturerFullName, n.main FROM seltexru.inventory as i, seltexru.inventoryNumbers as n, seltexru.inventoryManufacturers as m where i.id = n.inventoryId and n.manufacturerId = m.id and (i.description like '%cat%' or i.comment like '%cat%' or i.description like '%prodiesel%' or i.comment like '%prodiesel%') and (i.description not like '%core%' and i.comment not like '%core%') limit 15`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   connection.query(query, function (error, results, fields) {
+  //     let currentId: number = 0;
+  //     for (let i: number = 0; i < results.length; i += 1) {
+  //       if (currentId !== results[i].id) {
+  //
+  //         currentId = results[i].id;
+  //         items[items.length] = results[i];
+  //         items[items.length-1].numbers = [];
+  //       }
+  //       if(results[i].main) {
+  //         items[items.length-1].numbers.unshift({
+  //           number: results[i].number,
+  //           manufacturerFullName: results[i].manufacturerFullName,
+  //           main: results[i].main
+  //         })
+  //       } else {
+  //         items[items.length-1].numbers[items[items.length-1].numbers.length] = {
+  //           number: results[i].number,
+  //           manufacturerFullName: results[i].manufacturerFullName,
+  //           main: results[i].main
+  //         }
+  //       }
+  //     }
+  //     callback(items);
+  //   });
+  //   connection.end();
   // }
 
 }

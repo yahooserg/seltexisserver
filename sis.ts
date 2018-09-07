@@ -1,9 +1,7 @@
 ///<reference path="./node_modules/@types/node/index.d.ts"/>
 import * as express from 'express';
 import { Application } from 'express';
-// import * as http from 'http';
 import * as fs from 'fs';
-import * as https from 'https';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
 import { MySqlService } from './services/mysql.service';
@@ -18,15 +16,23 @@ import {MyAWSService} from './services/aws.service';
 const myAWSService = new MyAWSService();
 const app: Application = express();
 let bodyParser = require('body-parser');
+import * as http from 'http';
+import * as https from 'https';
 
-// const httpServer = http.createServer(app);
-// httpServer.listen(myNodeConfig.serverPort, () => { });
+let secure: boolean = true; //true for production
 
-let privateKey = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/privkey.pem`);
-let certificate = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/fullchain.pem`);
-let credentials = {key: privateKey, cert: certificate};
-const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(myNodeConfig.serverPort, () => { });
+
+if (!secure) {
+  const server = http.createServer(app);
+  server.listen(myNodeConfig.serverPort, () => { });
+} else {
+  let privateKey = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/privkey.pem`);
+  let certificate = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/fullchain.pem`);
+  let credentials = {key: privateKey, cert: certificate};
+  const server = https.createServer(credentials, app);
+  server.listen(myNodeConfig.serverPort, () => { });
+}
+
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
@@ -202,20 +208,16 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 
 app.get('/api/createxlprice', function(req, res) {
   res.send({res: "OK"});
-  // mySqlService.priceListCreateStart(1, ()=>{
-    mySqlService.getPriceListData(req.params.company, (priceListData) => {
-      myXLService.createXLPrice(priceListData, (xlFile)=>{
-        myAWSService.uploadPrice(xlFile, ()=>{
-          myXLService.createXLCross(priceListData, (xlFile)=>{
-            myAWSService.uploadCross(xlFile, ()=>{
-              // mySqlService.priceListCreateFinish(1, ()=>{
-              // });
-            });
-          });
-        });
+  mySqlService.getPriceListData(req.params.company, (priceListData) => {
+    myXLService.createXLPrice(priceListData, (xlFile)=>{
+      myAWSService.uploadPrice(xlFile, ()=>{
       });
     });
-  // })
+    myXLService.createXLCross(priceListData, (xlFile)=>{
+      myAWSService.uploadCross(xlFile, ()=>{
+      });
+    });
+  });
 });
 
 app.get('/api/getpricelistupdatedate', function(req, res) {
@@ -231,7 +233,7 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
 //     res.send(items);
 //   });
 // });
-
+//
 // let tempFunc = function () {
 //   mySqlService.tempFunc((items) => {
 //       console.log(items)

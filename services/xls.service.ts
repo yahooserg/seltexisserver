@@ -37,8 +37,8 @@ export class MyXLService {
     worksheet.cell(1,4).string('main number').style(style);
     worksheet.cell(1,5).string('all numbers').style(style);
     worksheet.cell(1,6).string('price').style(style);
-    worksheet.cell(1,7).string('stockmsk').style(style);
-    worksheet.cell(1,8).string('stockspb').style(style);
+    worksheet.cell(1,7).string('stock msk').style(style);
+    worksheet.cell(1,8).string('stock spb').style(style);
     worksheet.cell(1,9).string('in transit').style(style);
 
     // worksheet2.cell(1,1).string('manufacturer').style(style);
