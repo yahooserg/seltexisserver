@@ -19,9 +19,9 @@ let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
 
+//////////////////////////////////////////////////
+////////// http/https secure or not block
 let secure: boolean = true; //true for production
-
-
 if (!secure) {
   const server = http.createServer(app);
   server.listen(myNodeConfig.serverPort, () => { });
@@ -32,6 +32,8 @@ if (!secure) {
   const server = https.createServer(credentials, app);
   server.listen(myNodeConfig.serverPort, () => { });
 }
+//////////////////////////////////////////////
+/////////////////////////////////////////////
 
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
