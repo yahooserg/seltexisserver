@@ -95,7 +95,7 @@ export class MyXLService {
     }
 
     // workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
-    workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx', function(err, stats) {
+    workbook.write('../../../www/seltex/seltexru/data/seltexprice.xlsx', function(err, stats) {
       if (err) {
         console.error(err);
       } else {
@@ -140,7 +140,7 @@ export class MyXLService {
       }
     }
     // workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx');
-    workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx', function(err, stats) {
+    workbook.write('../../../www/seltex/seltexru/data/seltexcross.xlsx', function(err, stats) {
       if (err) {
         console.error(err);
       } else {
