@@ -105,6 +105,7 @@ export class MyXLService {
   }
 
   public createXLCross(data, callback) {
+    console.log("I AM IN CROSSSSSSSSS")
     let workbook = new xl.Workbook();
     let worksheet = workbook.addWorksheet('SeltexPrice');
 
