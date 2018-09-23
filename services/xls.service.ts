@@ -92,8 +92,15 @@ export class MyXLService {
 
     }
 
-    workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
-    callback();
+    // workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
+    workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx', function(err, stats) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(stats); // Prints out an instance of a node.js fs.Stats object
+        callback();
+      }
+    });
 
   }
 
@@ -129,8 +136,15 @@ export class MyXLService {
           k += 1;
       }
     }
-    workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx');
-    callback();
+    // workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx');
+    workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx', function(err, stats) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(stats); // Prints out an instance of a node.js fs.Stats object
+        callback();
+      }
+    });
 
   }
 
