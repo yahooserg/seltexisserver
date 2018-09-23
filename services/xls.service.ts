@@ -10,6 +10,8 @@ export class MyXLService {
   }
 
   public createXLPrice(data, callback) {
+    console.log("I AM IN PRICE")
+
     let workbook = new xl.Workbook();
     // let workbook2 = new xl.Workbook();
 
