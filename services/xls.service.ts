@@ -23,7 +23,7 @@ export class MyXLService {
 
     let worksheet = workbook.addWorksheet('SeltexPrice');
     // let worksheet2 = workbook2.addWorksheet('SeltexPrice');
-    worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+    worksheet.addRow([1,2,3]);
     workbook.xlsx.writeFile("../../../www/seltex/seltexru/data/seltexcross.xlsx")
     .then(function() {
         // done
