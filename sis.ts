@@ -210,11 +210,11 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 
 app.get('/api/createxlprice', function(req, res) {
   mySqlService.getPriceListData(req.params.company, (priceListData) => {
-    // myXLService.createXLPrice(priceListData, (xlFile)=>{
+    myXLService.createXLPrice(priceListData, (xlFile)=>{
     //   myAWSService.uploadPrice(xlFile, ()=>{
         res.send({res: "OK"});
     //   });
-    // });
+    });
     // myXLService.createXLCross(priceListData, (xlFile)=>{
     //   myAWSService.uploadCross(xlFile, ()=>{
     //   });
