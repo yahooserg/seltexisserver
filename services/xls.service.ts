@@ -92,9 +92,10 @@ export class MyXLService {
 
     }
 
-    workbook.writeToBuffer().then((buffer) => {
-      callback(buffer);
-    });
+    workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
+    // workbook.writeToBuffer().then((buffer) => {
+    //   callback(buffer);
+    // });
 
   }
 
