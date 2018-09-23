@@ -93,9 +93,7 @@ export class MyXLService {
     }
 
     workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
-    // workbook.writeToBuffer().then((buffer) => {
-    //   callback(buffer);
-    // });
+    callback();
 
   }
 
@@ -131,10 +129,8 @@ export class MyXLService {
           k += 1;
       }
     }
-
-    workbook.writeToBuffer().then((buffer) => {
-      callback(buffer);
-    });
+    workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx');
+    callback();
 
   }
 
