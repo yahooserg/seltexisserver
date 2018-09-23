@@ -23,7 +23,8 @@ export class MyXLService {
 
     let worksheet = workbook.addWorksheet('SeltexPrice');
     // let worksheet2 = workbook2.addWorksheet('SeltexPrice');
-    worksheet.addRow([1,2,3]);
+    let priceUpdatedOnInfo: string = `Updated: ${myFunctions.getDateString()}`;
+    worksheet.addRow(["id","name","manufacturer", "main number", "all numbers", "price", "stock msk", "stock spb", "transit", priceUpdatedOnInfo]);
     workbook.xlsx.writeFile("../../../www/seltex/seltexru/data/seltexcross.xlsx")
     .then(function() {
         // done
