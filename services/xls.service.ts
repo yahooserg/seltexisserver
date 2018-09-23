@@ -141,6 +141,8 @@ export class MyXLService {
       if (err) {
         console.error(err);
       } else {
+        console.log("CROSS!!!!"); // Prints out an instance of a node.js fs.Stats object
+
         console.log(stats); // Prints out an instance of a node.js fs.Stats object
         callback();
       }
