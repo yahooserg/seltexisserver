@@ -209,16 +209,17 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
-  mySqlService.getPriceListData(req.params.company, (priceListData) => {
-    myXLService.createXLPrice(priceListData, ()=>{
-      console.log("BEFORE CROSS");
+  // mySqlService.getPriceListData(req.params.company, (priceListData) => {
+    // myXLService.createXLPrice(priceListData, (xlFile)=>{
+      // console.log("BEFORE CROSS");
+        // myAWSService.uploadPrice(xlFile, ()=>{
+            res.send({res: "OK"});
+        // });
     //   myXLService.createXLCross(priceListData, ()=>{
-        res.send({res: "OK"});
     //   });
-    });
+    // });
 
-    //   myAWSService.uploadPrice(xlFile, ()=>{
-    //   });
+
     //   myAWSService.uploadCross(xlFile, ()=>{
     //   });
 
