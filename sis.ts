@@ -215,7 +215,9 @@ app.get('/api/createxlprice', function(req, res) {
         myAWSService.uploadPrice(xlFile, ()=>{
           myXLService.createXLCross(priceListData, (xlFileCross)=>{
               myAWSService.uploadCross(xlFileCross, ()=>{
-                res.send({res: "OK"});
+                myAWSService.getPriceUpdateDate((data)=>{
+                  res.send({data: data, res: "OK"});
+                });
               });
           });
         });
@@ -231,7 +233,6 @@ app.get('/api/createxlprice', function(req, res) {
 
 app.get('/api/getpricelistupdatedate', function(req, res) {
   myAWSService.getPriceUpdateDate((data)=>{
-    console.log(data)
     res.send(data);
   });
 });
