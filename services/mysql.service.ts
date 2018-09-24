@@ -534,19 +534,28 @@ export class MySqlService {
           currentId = results[i].id;
           items[items.length] = results[i];
           items[items.length-1].numbers = [];
+          items[items.length-1].numbersString = "";
+          items[items.length-1].numberMain = "";
+          items[items.length-1].manufacturer = "";
+
         }
         if(results[i].main) {
           items[items.length-1].numbers.unshift({
             number: results[i].number,
             manufacturerFullName: results[i].manufacturerFullName,
             main: results[i].main
-          })
+          });
+          items[items.length-1].numbersString = `${results[i].number} ${items[items.length-1].numbersString}`;
+          items[items.length-1].numberMain = results[i].number;
+          items[items.length-1].manufacturer = results[i].manufacturerFullName;
+
         } else {
           items[items.length-1].numbers[items[items.length-1].numbers.length] = {
             number: results[i].number,
             manufacturerFullName: results[i].manufacturerFullName,
             main: results[i].main
-          }
+          };
+          items[items.length-1].numbersString = `${items[items.length-1].numbersString} / ${results[i].number}`;
         }
       }
       callback(items);
