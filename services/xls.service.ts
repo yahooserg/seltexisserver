@@ -10,7 +10,6 @@ export class MyXLService {
   }
 
   public createXLPrice(data, callback) {
-    console.log("I AM IN PRICE")
 
     // let workbook = new xl.Workbook();
     // let workbook2 = new xl.Workbook();
@@ -25,10 +24,6 @@ export class MyXLService {
     // let worksheet2 = workbook2.addWorksheet('SeltexPrice');
     let priceUpdatedOnInfo: string = `Updated: ${myFunctions.getDateString()}`;
     let xlData = [["id","name","manufacturer", "main number", "all numbers", "price", "stock msk", "stock spb", "transit", priceUpdatedOnInfo]];
-
-
-
-
 
     for (let i: number = 0; i < data.length; i += 1) {
       if (data[i].stock > 12) {
@@ -55,69 +50,26 @@ export class MyXLService {
 
     callback(xl.build([{name: "SeltexPrice", data: xlData}]));
 
-    // workbook.xlsx.writeFile("../../../www/seltex/seltexru/data/seltexprice.xlsx")
-    // .then(function() {
-    //     callback();
-    // });
 
-    //
-    // // workbook.write('../../../www/seltex/seltexru/data/SeltexPrice.xlsx');
-    // workbook.write('../../../www/seltex/seltexru/data/seltexprice.xlsx', function(err, stats) {
-    //   if (err) {
-    //     console.error(err);
-    //   } else {
-    //     console.log(stats); // Prints out an instance of a node.js fs.Stats object
-    //     callback();
-    //   }
-    // });
 
   }
 
-  // public createXLCross(data, callback) {
-  //   console.log("I AM IN CROSSSSSSSSS")
-  //   let workbook = new xl.Workbook();
-  //   let worksheet = workbook.addWorksheet('SeltexPrice');
-  //
-  //   let style = workbook.createStyle({
-  //     font: {
-  //       // color: '#FF0800',
-  //       size: 12
-  //     }
-  //   });
-  //
-  //
-  //
-  //
-  //   worksheet.cell(1,1).string('manufacturer').style(style);
-  //   worksheet.cell(1,2).string('number').style(style);
-  //   worksheet.cell(1,3).string('crossmanufacturer').style(style);
-  //   worksheet.cell(1,4).string('crossnumber').style(style);
-  //
-  //   let priceUpdatedOnInfo: string = myFunctions.getDateString();
-  //   worksheet.cell(1,5).string(`Updated: ${priceUpdatedOnInfo}`).style(style);
-  //
-  //   let k: number = 0;
-  //   for (let i: number = 0; i < data.length; i += 1) {
-  //     for(let j: number = 1; j < data[i].numbers.length; j += 1) {
-  //         worksheet.cell(k+2,1).string(`${data[i].numbers[0].manufacturerFullName}`).style(style);
-  //         worksheet.cell(k+2,2).string(`${data[i].numbers[0].number}`).style(style);
-  //         worksheet.cell(k+2,3).string(`${data[i].numbers[j].manufacturerFullName}`).style(style);
-  //         worksheet.cell(k+2,4).string(`${data[i].numbers[j].number}`).style(style);
-  //         k += 1;
-  //     }
-  //   }
-  //   // workbook.write('../../../www/seltex/seltexru/data/SeltexCross.xlsx');
-  //   workbook.write('../../../www/seltex/seltexru/data/seltexcross.xlsx', function(err, stats) {
-  //     if (err) {
-  //       console.error(err);
-  //     } else {
-  //       console.log("CROSS!!!!"); // Prints out an instance of a node.js fs.Stats object
-  //
-  //       console.log(stats); // Prints out an instance of a node.js fs.Stats object
-  //       callback();
-  //     }
-  //   });
-  //
-  // }
+  public createXLCross(data, callback) {
+    let priceUpdatedOnInfo: string = `Updated: ${myFunctions.getDateString()}`;
+
+
+    let xlData = [["manufacturer","number","crossmanufacturer", "crossnumber", priceUpdatedOnInfo]];
+
+
+    let k: number = 0;
+    for (let i: number = 0; i < data.length; i += 1) {
+      for(let j: number = 1; j < data[i].numbers.length; j += 1) {
+        xlData[xlData.length] = [`${data[i].numbers[0].manufacturerFullName}`, `${data[i].numbers[0].number}`, `${data[i].numbers[j].manufacturerFullName}`, `${data[i].numbers[j].number}`];
+          k += 1;
+      }
+    }
+    callback(xl.build([{name: "SeltexPrice", data: xlData}]));
+
+  }
 
 }

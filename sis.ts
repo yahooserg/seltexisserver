@@ -213,15 +213,18 @@ app.get('/api/createxlprice', function(req, res) {
     myXLService.createXLPrice(priceListData, (xlFile)=>{
       console.log("BEFORE UPLOAD");
         myAWSService.uploadPrice(xlFile, ()=>{
-            res.send({res: "OK"});
+          myXLService.createXLCross(priceListData, ()=>{
+              myAWSService.uploadCross(xlFile, ()=>{
+                res.send({res: "OK"});
+              });
+          });
         });
     //   myXLService.createXLCross(priceListData, ()=>{
     //   });
     });
 
 
-    //   myAWSService.uploadCross(xlFile, ()=>{
-    //   });
+
 
   });
 });
