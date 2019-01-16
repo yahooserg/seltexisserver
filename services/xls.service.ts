@@ -61,11 +61,9 @@ export class MyXLService {
     let xlData = [["manufacturer","number","crossmanufacturer", "crossnumber", priceUpdatedOnInfo]];
 
 
-    let k: number = 0;
     for (let i: number = 0; i < data.length; i += 1) {
       for(let j: number = 1; j < data[i].numbers.length; j += 1) {
         xlData[xlData.length] = [`${data[i].numbers[0].manufacturerFullName}`, `${data[i].numbers[0].number}`, `${data[i].numbers[j].manufacturerFullName}`, `${data[i].numbers[j].number}`];
-          k += 1;
       }
     }
     callback(xl.build([{name: "SeltexPrice", data: xlData}]));

@@ -5,7 +5,7 @@
   "main": "seltexisserver.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "sudo ts-node sis.ts",
+    "start": "ts-node sis.ts",
     "watch": "nodemon -w . --ext \".ts\" --exec \"npm start\""
   },
   "repository": {
@@ -27,12 +27,15 @@
     "express": "^4.15.3",
     "mysql": "^2.16.0",
     "node-xlsx": "^0.12.1",
+    "querystring": "^0.2.0",
     "request": "^2.88.0",
     "xlsx": "^0.14.0"
   },
   "devDependencies": {
     "@types/express": "^4.16.0",
     "@types/mysql": "^2.15.5",
-    "@types/node": "^6.0.117"
+    "@types/node": "^6.0.117",
+    "@types/node-xlsx": "^0.12.0",
+    "@types/request": "^2.48.1"
   }
 }
