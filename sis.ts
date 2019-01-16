@@ -4,6 +4,8 @@ import { Application } from 'express';
 import * as fs from 'fs';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
+import {MyCTPConfig} from '../seltexisserverconfig/myctpconfig';
+const myCTPConfig = new MyCTPConfig();
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 import { MyFileService } from './services/file.service';
@@ -18,7 +20,7 @@ const app: Application = express();
 let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
-// import * as request from 'request';
+import * as request from 'request';
 
 
 //////////////////////////////////////////////////
@@ -42,8 +44,8 @@ app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
 
 app.use(function(req, res, next) {
-  let allowedOrigins = ['https://seltex.ru', 'https://www.seltex.ru'],
-  origin = req.headers.origin;
+  let allowedOrigins = ['https://seltex.ru', 'https://www.seltex.ru'];
+  let origin : string = String(req.headers.origin);
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -213,7 +215,7 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 app.get('/api/createxlprice', function(req, res) {
   mySqlService.getPriceListData(req.params.company, (priceListData) => {
     myXLService.createXLPrice(priceListData, (xlFile)=>{
-      console.log("BEFORE UPLOAD");
+      // console.log("BEFORE UPLOAD");
         myAWSService.uploadPrice(xlFile, ()=>{
           myXLService.createXLCross(priceListData, (xlFileCross)=>{
               myAWSService.uploadCross(xlFileCross, ()=>{
@@ -239,32 +241,34 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
   });
 });
 
-let querystring = require("querystring");
 app.post('/api/test', function(req, res) {
   console.log(req);
 });
 
-// app.get('/api/tempfunc', function(req, res) {
-//   console.log('tempFunc')
-//   mySqlService.tempFunc((items) => {
-//     res.send(items);
-//   });
-// });
-//
+app.get('/api/tempfunc', function(req, res) {
+  console.log('tempFunc')
+  // mySqlService.tempFunc((items) => {
+  //   res.send(items);
+  // });
+});
+
 // let tempFunc = function () {
-//   let formData = querystring.stringify({
-//     name: "Barbos",
-//     email: "jklj"
-//   });
-//   console.log(formData);
-//   request.post({headers: {
-//     'content-type' : 'application/x-www-form-urlencoded'
-//   }, url:'https://fvolchek.net/temp/index.php', formData: "name=Barbos&email=jkljjkl"}, function optionalCallback(err, httpResponse, body) {
-//   if (err) {
-//     return console.error('upload failed:', err);
-//   }
-//   console.log('Upload successful!  Server responded with:', body);
-// });
-//
+//     let qty = 2;
+//     let partn = '8N8221';
+//     let myForm = {
+//       format:'json',
+//       acckey:myCTPConfig.acckey,
+//       userid:myCTPConfig.userid,
+//       passw:myCTPConfig.passw,
+//       cust:myCTPConfig.cust,
+//       // loc:'01', /commented to see all warehouses
+//       partn:partn,
+//       qty:qty || '1'};
+//     request.post({url:'https://dev.costex.com:10443/WebServices/costex/partService/partController.php', form:myForm}, function(err, httpResponse, body){
+//         if (err) {
+//         return console.error('upload failed:', err);
+//       }
+//       console.log(body);
+//     })
 // }
 // tempFunc();
