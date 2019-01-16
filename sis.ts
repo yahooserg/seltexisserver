@@ -18,6 +18,8 @@ const app: Application = express();
 let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
+// import * as request from 'request';
+
 
 //////////////////////////////////////////////////
 ////////// http/https secure or not block
@@ -237,6 +239,11 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
   });
 });
 
+let querystring = require("querystring");
+app.post('/api/test', function(req, res) {
+  console.log(req);
+});
+
 // app.get('/api/tempfunc', function(req, res) {
 //   console.log('tempFunc')
 //   mySqlService.tempFunc((items) => {
@@ -245,9 +252,19 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
 // });
 //
 // let tempFunc = function () {
-//   mySqlService.tempFunc((items) => {
-//       console.log(items)
-//
+//   let formData = querystring.stringify({
+//     name: "Barbos",
+//     email: "jklj"
 //   });
+//   console.log(formData);
+//   request.post({headers: {
+//     'content-type' : 'application/x-www-form-urlencoded'
+//   }, url:'https://fvolchek.net/temp/index.php', formData: "name=Barbos&email=jkljjkl"}, function optionalCallback(err, httpResponse, body) {
+//   if (err) {
+//     return console.error('upload failed:', err);
+//   }
+//   console.log('Upload successful!  Server responded with:', body);
+// });
+//
 // }
 // tempFunc();
