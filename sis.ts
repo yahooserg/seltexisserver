@@ -4,8 +4,8 @@ import { Application } from 'express';
 import * as fs from 'fs';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
-import {MyCTPConfig} from '../seltexisserverconfig/myctpconfig';
-const myCTPConfig = new MyCTPConfig();
+// import {MyCTPConfig} from '../seltexisserverconfig/myctpconfig';
+// const myCTPConfig = new MyCTPConfig();
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 import { MyFileService } from './services/file.service';
@@ -20,13 +20,12 @@ const app: Application = express();
 let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
-import * as request from 'request';
+// import * as request from 'request';
 
 
 //////////////////////////////////////////////////
 ////////// http/https secure or not block
-let secure: boolean = true; //true for production
-if (!secure) {
+if (!myNodeConfig.secure) {
   const server = http.createServer(app);
   server.listen(myNodeConfig.serverPort, () => { });
 } else {
