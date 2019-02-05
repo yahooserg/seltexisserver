@@ -20,6 +20,8 @@ const app: Application = express();
 let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
+
+
 // import * as request from 'request';
 
 
@@ -36,8 +38,6 @@ if (!myNodeConfig.secure) {
   server.listen(myNodeConfig.serverPort, () => { });
 }
 //////////////////////////////////////////////
-/////////////////////////////////////////////
-
 
 app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
@@ -251,6 +251,8 @@ app.get('/api/tempfunc', function(req, res) {
   // });
 });
 
+
+//ctp temp
 // let tempFunc = function () {
 //     let qty = 2;
 //     let partn = '8N8221';
@@ -271,3 +273,14 @@ app.get('/api/tempfunc', function(req, res) {
 //     })
 // }
 // tempFunc();
+
+// url work temp
+let tempFunc = function () {
+  mySqlService.tempFunc((items, ml) => {
+    console.log(items);
+    console.log(ml);
+
+    console.log(items.length);
+  });
+}
+tempFunc();
