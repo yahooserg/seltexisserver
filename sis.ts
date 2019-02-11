@@ -4,8 +4,6 @@ import { Application } from 'express';
 import * as fs from 'fs';
 import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
-// import {MyCTPConfig} from '../seltexisserverconfig/myctpconfig';
-// const myCTPConfig = new MyCTPConfig();
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
 import { MyFileService } from './services/file.service';
@@ -22,7 +20,6 @@ import * as http from 'http';
 import * as https from 'https';
 
 
-// import * as request from 'request';
 
 
 //////////////////////////////////////////////////
@@ -243,7 +240,6 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
 //////////////////////////////////////////////////////////
 // ALL TEMP FUNCS AND APIs:
 //////////////////////////////////////////////////////////
-
 // app.post('/api/test', function(req, res) {
 //   console.log(req);
 // });
@@ -251,7 +247,10 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
 // app.get('/api/temp', function(req, res) {
 //   console.log('tempFunc')
 // });
-
-import { TempService } from './temp/temp.service';
-const tempService = new TempService();
-tempService.createURLs();
+//
+// import { TempService } from './temp/temp.service';
+// const tempService = new TempService();
+// tempService.createURLs();
+//////////////////////////////////////////////////////////
+// END ALL TEMP FUNCS AND APIs:
+//////////////////////////////////////////////////////////
