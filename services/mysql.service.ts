@@ -202,7 +202,8 @@ export class MySqlService {
     request
       .on('error',(err)=>{
         // console.log(err);
-        callback({'error':err});
+        items[0] = {'error':err};
+        // callback({'error':err});
         return;
       })
       .on('result', (row) => {
@@ -305,13 +306,14 @@ export class MySqlService {
   }
 
   searchInventory(query, callback) {
-    let items = [];
+    let items: any = [];
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
       .on('error',(err)=>{
         // console.log(err);
-        callback({'error':err});
+        items = {'error':err};
+        // callback({'error':err});
       })
       .on('result', (row) => {
         items[items.length] = row;
@@ -564,7 +566,6 @@ export class MySqlService {
   }
 
   public priceListCreateStart(company, callback) {
-    let items = [];
     let query = `call priceListCreateStart('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
@@ -584,7 +585,6 @@ export class MySqlService {
   };
 
   public priceListCreateFinish(company, callback) {
-    let items = [];
     let query = `call priceListCreateFinish('${company}')`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
