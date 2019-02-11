@@ -240,47 +240,18 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
   });
 });
 
-app.post('/api/test', function(req, res) {
-  console.log(req);
-});
+//////////////////////////////////////////////////////////
+// ALL TEMP FUNCS AND APIs:
+//////////////////////////////////////////////////////////
 
-app.get('/api/tempfunc', function(req, res) {
-  console.log('tempFunc')
-  // mySqlService.tempFunc((items) => {
-  //   res.send(items);
-  // });
-});
+// app.post('/api/test', function(req, res) {
+//   console.log(req);
+// });
+//
+// app.get('/api/temp', function(req, res) {
+//   console.log('tempFunc')
+// });
 
-
-//ctp temp
-// let tempFunc = function () {
-//     let qty = 2;
-//     let partn = '8N8221';
-//     let myForm = {
-//       format:'json',
-//       acckey:myCTPConfig.acckey,
-//       userid:myCTPConfig.userid,
-//       passw:myCTPConfig.passw,
-//       cust:myCTPConfig.cust,
-//       // loc:'01', /commented to see all warehouses
-//       partn:partn,
-//       qty:qty || '1'};
-//     request.post({url:'https://dev.costex.com:10443/WebServices/costex/partService/partController.php', form:myForm}, function(err, httpResponse, body){
-//         if (err) {
-//         return console.error('upload failed:', err);
-//       }
-//       console.log(body);
-//     })
-// }
-// tempFunc();
-
-// url work temp
-let tempFunc = function () {
-  mySqlService.tempFunc((items, ml) => {
-    console.log(items);
-    console.log(ml);
-
-    console.log(items.length);
-  });
-}
-tempFunc();
+import { TempService } from './temp/temp.service';
+const tempService = new TempService();
+tempService.createURLs();

@@ -1,7 +1,6 @@
 import * as mysql from 'mysql';
 import { MySqlConnection } from '../../seltexisserverconfig/dbconnectmysqlnode.js';
 let mySqlConnection = new MySqlConnection;
-let ctt = require('cyrillic-to-translit-js');
 
 export class MySqlService {
 
@@ -828,79 +827,82 @@ export class MySqlService {
 
   ////////////////
   //// this temp creates urls
-  tempFunc(callback) {
-    let items = [];
-    let itemsFinal = [];
+  // tempFunc(callback) {
+  //   let items = [];
+  //   let itemsFinal = [];
+  //
+  //   let query = `select LOWER(description) as description, "CAT" AS 'comment2', inventory.comment,inventoryNumbers.inventoryId, inventoryNumbers.number, inventoryNumbers.manufacturerID, inventoryManufacturers.fullName as mName from seltexru.inventory, inventoryNumbers, inventoryManufacturers where inventory.comment like "%cat%" and inventory.url = "undefined" and inventoryNumbers.inventoryId = inventory.id and inventoryManufacturers.id = inventoryNumbers.manufacturerID order by inventory.id asc, inventoryNumbers.main desc`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //   let currentId = 0;
+  //   let j = -1;
+  //   let maxLength = 0;
+  //   request
+  //     .on('result', (row) => {
+  //       if (currentId !== row.inventoryId) {
+  //         if (j !== -1) {
+  //           // query = `update inventory set url = '${itemsFinal[j]}' where id = ${currentId}`;
+  //           // //           // console.log(query);
+  //           // connection.query(query);
+  //         }
+  //         currentId = row.inventoryId;
+  //         j += 1;
+  //         row.descriptionURL = row.description.replace(/\-/g,'');
+  //         row.descriptionURL = ctt().transform(row.descriptionURL, "-");
+  //         row.descriptionURL = row.descriptionURL.replace(/r\/k/g,'remkomplekt');
+  //         row.descriptionURL = row.descriptionURL.replace(/\//g,'-');
+  //         row.descriptionURL = row.descriptionURL.replace(/\\/g,'-');
+  //         row.descriptionURL = row.descriptionURL.replace(/\(|\)|\,|\.|\'/g,'');
+  //         row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
+  //         row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
+  //         row.descriptionURL = row.descriptionURL.replace(/\-kt/g,'-komplekt');
+  //
+  //         row.commentURL = row.comment.replace(/\-/g,'');
+  //         row.commentURL = ctt().transform(row.commentURL, "-");
+  //         row.commentURL = row.commentURL.replace(/r\/k/g,'remkomplekt');
+  //         row.commentURL = row.commentURL.replace(/\//g,'-');
+  //         row.commentURL = row.commentURL.replace(/\\/g,'-');
+  //         row.commentURL = row.commentURL.replace(/\(|\)|\,|\.|\'/g,'');
+  //         row.commentURL = row.commentURL.replace(/\-\-/g,'-');
+  //         row.commentURL = row.commentURL.replace(/\-\-/g,'-');
+  //         row.commentURL = row.commentURL.replace(/-kt/g,'-komplekt');
+  //         row.number = row.number.replace(/\ /g,'-');
+  //         row.mName = row.mName.replace(/\ /g,'-');
+  //
+  //
+  //         row.url = `${row.descriptionURL}-${row.commentURL}`;
+  //         if (row.manufacturerID === 1) {
+  //           row.url += `-${row.number}-caterpillar`;
+  //         }  else if (row.manufacturerID === 5) {
+  //           row.url += `-${row.number}-costex-ctp`;
+  //         } else {
+  //           row.url += `-${row.number}-${row.mName}`;
+  //         }
+  //         itemsFinal[j] = row.url;
+  //       } else {
+  //         row.number = row.number.replace(/\ /g,'-');
+  //         itemsFinal[j] += `-${row.number}`;
+  //       }
+  //       itemsFinal[j] = itemsFinal[j].replace(/\(|\)|\,|\.|\'|\ |\/|\\/g,'');
+  //
+  //       if (maxLength < itemsFinal[j].length) {
+  //         maxLength = itemsFinal[j].length
+  //       }
+  //
+  //
+  //     })
+  //     .on('end', () => {
+  //       // let's get rid of OkPacket that arrives after stored procedure
+  //       // items.splice(items.length - 1, 1);
+  //       query = `update inventory set url = '${itemsFinal[itemsFinal.length-1]}' where id = ${currentId}`;
+  //       //           // console.log(query);
+  //       connection.query(query);
+  //       callback(itemsFinal, maxLength);
+  //       // connection.end();
+  //
+  //     });
+  // }
+  //CREATE URL TEMP End
+  ////////////////////////////////////
 
-    let query = `select LOWER(description) as description, "CAT" AS 'comment2', inventory.comment,inventoryNumbers.inventoryId, inventoryNumbers.number, inventoryNumbers.manufacturerID, inventoryManufacturers.fullName as mName from seltexru.inventory, inventoryNumbers, inventoryManufacturers where inventory.comment like "%cat%" and inventory.url = "undefined" and inventoryNumbers.inventoryId = inventory.id and inventoryManufacturers.id = inventoryNumbers.manufacturerID order by inventory.id asc, inventoryNumbers.main desc`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    let currentId = 0;
-    let j = -1;
-    let maxLength = 0;
-    request
-      .on('result', (row) => {
-        if (currentId !== row.inventoryId) {
-          if (j !== -1) {
-            // query = `update inventory set url = '${itemsFinal[j]}' where id = ${currentId}`;
-            // //           // console.log(query);
-            // connection.query(query);
-          }
-          currentId = row.inventoryId;
-          j += 1;
-          row.descriptionURL = row.description.replace(/\-/g,'');
-          row.descriptionURL = ctt().transform(row.descriptionURL, "-");
-          row.descriptionURL = row.descriptionURL.replace(/r\/k/g,'remkomplekt');
-          row.descriptionURL = row.descriptionURL.replace(/\//g,'-');
-          row.descriptionURL = row.descriptionURL.replace(/\\/g,'-');
-          row.descriptionURL = row.descriptionURL.replace(/\(|\)|\,|\.|\'/g,'');
-          row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
-          row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
-          row.descriptionURL = row.descriptionURL.replace(/\-kt/g,'-komplekt');
-
-          row.commentURL = row.comment.replace(/\-/g,'');
-          row.commentURL = ctt().transform(row.commentURL, "-");
-          row.commentURL = row.commentURL.replace(/r\/k/g,'remkomplekt');
-          row.commentURL = row.commentURL.replace(/\//g,'-');
-          row.commentURL = row.commentURL.replace(/\\/g,'-');
-          row.commentURL = row.commentURL.replace(/\(|\)|\,|\.|\'/g,'');
-          row.commentURL = row.commentURL.replace(/\-\-/g,'-');
-          row.commentURL = row.commentURL.replace(/\-\-/g,'-');
-          row.commentURL = row.commentURL.replace(/-kt/g,'-komplekt');
-          row.number = row.number.replace(/\ /g,'-');
-          row.mName = row.mName.replace(/\ /g,'-');
-
-
-          row.url = `${row.descriptionURL}-${row.commentURL}`;
-          if (row.manufacturerID === 1) {
-            row.url += `-${row.number}-caterpillar`;
-          }  else if (row.manufacturerID === 5) {
-            row.url += `-${row.number}-costex-ctp`;
-          } else {
-            row.url += `-${row.number}-${row.mName}`;
-          }
-          itemsFinal[j] = row.url;
-        } else {
-          row.number = row.number.replace(/\ /g,'-');
-          itemsFinal[j] += `-${row.number}`;
-        }
-        itemsFinal[j] = itemsFinal[j].replace(/\(|\)|\,|\.|\'|\ |\/|\\/g,'');
-
-        if (maxLength < itemsFinal[j].length) {
-          maxLength = itemsFinal[j].length
-        }
-
-
-      })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        // items.splice(items.length - 1, 1);
-        query = `update inventory set url = '${itemsFinal[itemsFinal.length-1]}' where id = ${currentId}`;
-        //           // console.log(query);
-        connection.query(query);
-        callback(itemsFinal, maxLength);
-        // connection.end();
-
-      });
-  }
 }
