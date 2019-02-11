@@ -19,9 +19,6 @@ let bodyParser = require('body-parser');
 import * as http from 'http';
 import * as https from 'https';
 
-
-
-
 //////////////////////////////////////////////////
 ////////// http/https secure or not block
 if (!myNodeConfig.secure) {
@@ -40,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false },{limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
 
 app.use(function(req, res, next) {
-  let allowedOrigins = ['https://seltex.ru', 'https://www.seltex.ru'];
+  let allowedOrigins = myNodeConfig.allowedOrigins;
   let origin : string = String(req.headers.origin);
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
@@ -224,10 +221,6 @@ app.get('/api/createxlprice', function(req, res) {
     //   myXLService.createXLCross(priceListData, ()=>{
     //   });
     });
-
-
-
-
   });
 });
 
