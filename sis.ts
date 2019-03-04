@@ -207,7 +207,7 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
-  request.get({url: myNodeConfig.xlServiceUrl}, function(err, httpResponse, body){
+  request.get({url: `${myNodeConfig.xlServiceUrl}/api/createxlprice`}, function(err, httpResponse, body){
       if (err) {
       return console.error('upload failed:', err);
     }
@@ -235,9 +235,17 @@ app.get('/api/createxlprice', function(req, res) {
 });
 
 app.get('/api/getpricelistupdatedate', function(req, res) {
-  myAWSService.getPriceUpdateDate((data)=>{
+  request.get({url: `${myNodeConfig.xlServiceUrl}/api/getpricelistupdatedate`}, function(err, httpResponse, data){
+      if (err) {
+      return console.error('upload failed:', err);
+    }
+    data = JSON.parse(data);
+    console.log(data);
     res.send(data);
-  });
+  })
+  // myAWSService.getPriceUpdateDate((data)=>{
+  //   res.send(data);
+  // });
 });
 
 //////////////////////////////////////////////////////////

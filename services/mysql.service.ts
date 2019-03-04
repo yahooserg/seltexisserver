@@ -499,30 +499,30 @@ export class MySqlService {
     connection.end();
   }
 
-  updateImage(company, image, callback) {
-    let items = [];
-    let query = `call updateImage('${image}')`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('error', function(err) {
-        console.log(err);
-      })
-      .on('result', (row) => {
-        items[items.length] = row;
-        // console.log(row)
-      })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        items.splice(items.length - 1, 1);
-        var buffer = new Buffer( items[0].newImage);
-        var bufferBase64 = buffer.toString('binary');
-        console.log(items[0].newImage.length);
-
-        callback(JSON.stringify(bufferBase64));
-      });
-    connection.end();
-  }
+  // updateImage(company, image, callback) {
+  //   let items = [];
+  //   let query = `call updateImage('${image}')`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //   request
+  //     .on('error', function(err) {
+  //       console.log(err);
+  //     })
+  //     .on('result', (row) => {
+  //       items[items.length] = row;
+  //       // console.log(row)
+  //     })
+  //     .on('end', () => {
+  //       // let's get rid of OkPacket that arrives after stored procedure
+  //       items.splice(items.length - 1, 1);
+  //       var buffer = new Buffer(items[0].newImage);
+  //       var bufferBase64 = buffer.toString('binary');
+  //       console.log(items[0].newImage.length);
+  //
+  //       callback(JSON.stringify(bufferBase64));
+  //     });
+  //   connection.end();
+  // }
 
   getPriceListData(company, callback) {
     let items = [];
