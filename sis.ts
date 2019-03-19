@@ -10,10 +10,10 @@ import { MyFileService } from './services/file.service';
 const myFileService = new MyFileService();
 import { MyFunctions } from './services/functions.service';
 const myFunctions = new MyFunctions();
-// import { MyXLService } from './services/xls.service';
-// const myXLService = new MyXLService();
-// import {MyAWSService} from './services/aws.service';
-// const myAWSService = new MyAWSService();
+import { MyXLService } from './services/xls.service';
+const myXLService = new MyXLService();
+import {MyAWSService} from './services/aws.service';
+const myAWSService = new MyAWSService();
 const app: Application = express();
 let bodyParser = require('body-parser');
 import * as request from 'request';
@@ -207,45 +207,45 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 });
 
 app.get('/api/createxlprice', function(req, res) {
-  request.get({url: `${myNodeConfig.xlServiceUrl}/api/createxlprice`}, function(err, httpResponse, body){
-      if (err) {
-      return console.error('upload failed:', err);
-    }
-    body = JSON.parse(body);
-    console.log(body);
-    res.send({data: body, res: "OK"});
-  })
+  // request.get({url: `${myNodeConfig.xlServiceUrl}/api/createxlprice`}, function(err, httpResponse, body){
+  //     if (err) {
+  //     return console.error('upload failed:', err);
+  //   }
+  //   body = JSON.parse(body);
+  //   console.log(body);
+  //   res.send({data: body, res: "OK"});
+  // })
 
-  // mySqlService.getPriceListData(req.params.company, (priceListData) => {
-  //   myXLService.createXLPrice(priceListData, (xlFile)=>{
-  //     // console.log("BEFORE UPLOAD");
-  //       myAWSService.uploadPrice(xlFile, ()=>{
-  //         myXLService.createXLCross(priceListData, (xlFileCross)=>{
-  //             myAWSService.uploadCross(xlFileCross, ()=>{
-  //               myAWSService.getPriceUpdateDate((data)=>{
-  //                 res.send({data: data, res: "OK"});
-  //               });
-  //             });
-  //         });
-  //       });
-  //   //   myXLService.createXLCross(priceListData, ()=>{
-  //   //   });
-  //   });
-  // });
+  mySqlService.getPriceListData(req.params.company, (priceListData) => {
+    myXLService.createXLPrice(priceListData, (xlFile)=>{
+      // console.log("BEFORE UPLOAD");
+        myAWSService.uploadPrice(xlFile, ()=>{
+          myXLService.createXLCross(priceListData, (xlFileCross)=>{
+              myAWSService.uploadCross(xlFileCross, ()=>{
+                myAWSService.getPriceUpdateDate((data)=>{
+                  res.send({data: data, res: "OK"});
+                });
+              });
+          });
+        });
+    //   myXLService.createXLCross(priceListData, ()=>{
+    //   });
+    });
+  });
 });
 
 app.get('/api/getpricelistupdatedate', function(req, res) {
-  request.get({url: `${myNodeConfig.xlServiceUrl}/api/getpricelistupdatedate`}, function(err, httpResponse, data){
-      if (err) {
-      return console.error('upload failed:', err);
-    }
-    data = JSON.parse(data);
-    console.log(data);
-    res.send(data);
-  })
-  // myAWSService.getPriceUpdateDate((data)=>{
+  // request.get({url: `${myNodeConfig.xlServiceUrl}/api/getpricelistupdatedate`}, function(err, httpResponse, data){
+  //     if (err) {
+  //     return console.error('upload failed:', err);
+  //   }
+  //   data = JSON.parse(data);
+  //   console.log(data);
   //   res.send(data);
-  // });
+  // })
+  myAWSService.getPriceUpdateDate((data)=>{
+    res.send(data);
+  });
 });
 
 //////////////////////////////////////////////////////////
