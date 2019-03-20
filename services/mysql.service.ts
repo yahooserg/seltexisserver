@@ -565,62 +565,62 @@ export class MySqlService {
     connection.end();
   }
 
-  public priceListCreateStart(company, callback) {
-    let query = `call priceListCreateStart('${company}')`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('error', function(err) {
-        console.log(err);
-      })
-      // .on('result', (row) => {
-      //   items[items.length] = row;
-      // })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        // items.splice(items.length - 1, 1);
-        callback();
-      });
-    connection.end();
-  };
-
-  public priceListCreateFinish(company, callback) {
-    let query = `call priceListCreateFinish('${company}')`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('error', function(err) {
-        console.log(err);
-      })
-      // .on('result', (row) => {
-      //   items[items.length] = row;
-      // })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        // items.splice(items.length - 1, 1);
-        callback();
-      });
-    connection.end();
-  };
-
-  public priceListCreateGetStatus(company, callback) {
-    let items = [];
-    let query = `call priceListCreateGetStatus('${company}')`;
-    let connection = mysql.createConnection(mySqlConnection);
-    let request = connection.query(query);
-    request
-      .on('error', function(err) {
-        console.log(err);
-      })
-      .on('result', (row) => {
-        items[items.length] = row;
-      })
-      .on('end', () => {
-        // let's get rid of OkPacket that arrives after stored procedure
-        items.splice(items.length - 1, 1);
-        callback(items);
-      });
-    connection.end();
-  };
+  // public priceListCreateStart(company, callback) {
+  //   let query = `call priceListCreateStart('${company}')`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //   request
+  //     .on('error', function(err) {
+  //       console.log(err);
+  //     })
+  //     // .on('result', (row) => {
+  //     //   items[items.length] = row;
+  //     // })
+  //     .on('end', () => {
+  //       // let's get rid of OkPacket that arrives after stored procedure
+  //       // items.splice(items.length - 1, 1);
+  //       callback();
+  //     });
+  //   connection.end();
+  // };
+  //
+  // public priceListCreateFinish(company, callback) {
+  //   let query = `call priceListCreateFinish('${company}')`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //   request
+  //     .on('error', function(err) {
+  //       console.log(err);
+  //     })
+  //     // .on('result', (row) => {
+  //     //   items[items.length] = row;
+  //     // })
+  //     .on('end', () => {
+  //       // let's get rid of OkPacket that arrives after stored procedure
+  //       // items.splice(items.length - 1, 1);
+  //       callback();
+  //     });
+  //   connection.end();
+  // };
+  //
+  // public priceListCreateGetStatus(company, callback) {
+  //   let items = [];
+  //   let query = `call priceListCreateGetStatus('${company}')`;
+  //   let connection = mysql.createConnection(mySqlConnection);
+  //   let request = connection.query(query);
+  //   request
+  //     .on('error', function(err) {
+  //       console.log(err);
+  //     })
+  //     .on('result', (row) => {
+  //       items[items.length] = row;
+  //     })
+  //     .on('end', () => {
+  //       // let's get rid of OkPacket that arrives after stored procedure
+  //       items.splice(items.length - 1, 1);
+  //       callback(items);
+  //     });
+  //   connection.end();
+  // };
 
 }
