@@ -221,11 +221,11 @@ app.get('/api/createxlprice', function(req, res) {
       // console.log("BEFORE UPLOAD");
         // myAWSService.uploadPrice(xlFile, ()=>{
         //   myXLService.createXLCross(priceListData, (xlFileCross)=>{
-              myAWSService.uploadCross(xlFileCross, ()=>{
+              // myAWSService.uploadCross(xlFileCross, ()=>{
                 myAWSService.getPriceUpdateDate((data)=>{
                   res.send({data: data, res: "OK"});
                 });
-              });
+              // });
         //   });
         // });
     //   myXLService.createXLCross(priceListData, ()=>{
