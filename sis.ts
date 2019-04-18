@@ -16,7 +16,7 @@ import {MyAWSService} from './services/aws.service';
 const myAWSService = new MyAWSService();
 const app: Application = express();
 let bodyParser = require('body-parser');
-import * as request from 'request';
+// import * as request from 'request';
 import * as http from 'http';
 import * as https from 'https';
 

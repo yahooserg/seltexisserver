@@ -65,7 +65,7 @@ export class MyFunctions {
         }
       }
     }
-    str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.link as link from inventory1s as p where (" + str + ")";
+    str = "SELECT p.ID as id, p.Description AS description, p.Price as price, p.Numbers AS numbers, p.stock as stock, p.ordered as ordered, p.msk as msk, p.link as link from inventory1s as p where (" + str + ")";
     if (countCatParts) {
       str = str + " or (" + catStr + ")";
     }
