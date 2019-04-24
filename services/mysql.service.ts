@@ -445,6 +445,23 @@ export class MySqlService {
     connection.end();
   }
 
+  updateInventoryUrl(company, inventoryId, newUrl, callback) {
+    let items = [];
+    let query = `call updateInventoryUrl(${inventoryId},'${newUrl}')`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
   updateManufacturer(company, id, name, fullName, callback) {
     let items = [];
     let query = `call updateManufacturer(${id},'${name}','${fullName}')`;

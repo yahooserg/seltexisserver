@@ -179,6 +179,12 @@ app.put('/api/updateinventoryweight/company/:company/inventoryid/:inventoryid', 
   });
 });
 
+app.put('/api/updateinventoryurl/company/:company/inventoryid/:inventoryid', function(req, res) {
+  mySqlService.updateInventoryUrl(req.params.company, req.params.inventoryid, req.body.newUrl, (items) => {
+    res.send(items);
+  });
+});
+
 app.put('/api/updatemanufacturer/company/:company/id/:id', function(req, res) {
   mySqlService.updateManufacturer(req.params.company, req.params.id, req.body.name, req.body.fullName, (items) => {
     res.send(items);
@@ -243,6 +249,14 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
   myAWSService.getPriceUpdateDate((data)=>{
     res.send(data);
   });
+});
+
+app.post('/api/getrecommendedurlforitem/company/:company/description/:description', function(req, res) {
+  // console.log(req.body.inventory);
+  myFunctions.getRecommendedUrlForItem(req.body.inventory, (data) => {
+    res.send({text:data});
+  });
+
 });
 
 //////////////////////////////////////////////////////////

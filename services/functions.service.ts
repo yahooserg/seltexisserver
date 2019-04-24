@@ -1,3 +1,5 @@
+let ctt = require('cyrillic-to-translit-js');
+
 export class MyFunctions {
 
   constructor() {
@@ -71,6 +73,49 @@ export class MyFunctions {
     }
     str = str + " and description not like N'я%' order by p.Description";
     return str;
+  }
+
+  public getRecommendedUrlForItem (row, callback) {
+    row.descriptionURL = row.description.text.replace(/\-/g,'');
+    row.descriptionURL = ctt().transform(row.descriptionURL, "-");
+    row.descriptionURL = row.descriptionURL.toLowerCase();
+    row.descriptionURL = row.descriptionURL.replace(/r\/k/g,'remkomplekt');
+    row.descriptionURL = row.descriptionURL.replace(/\//g,'-');
+    row.descriptionURL = row.descriptionURL.replace(/\\/g,'-');
+    row.descriptionURL = row.descriptionURL.replace(/\(|\)|\,|\.|\'/g,'');
+    row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
+    row.descriptionURL = row.descriptionURL.replace(/\-\-/g,'-');
+    row.descriptionURL = row.descriptionURL.replace(/\-kt/g,'-komplekt');
+
+    row.commentURL = row.comment.text.replace(/\-/g,'');
+    row.commentURL = ctt().transform(row.commentURL, "-");
+    row.commentURL = row.commentURL.replace(/r\/k/g,'remkomplekt');
+    row.commentURL = row.commentURL.replace(/\//g,'-');
+    row.commentURL = row.commentURL.replace(/\\/g,'-');
+    row.commentURL = row.commentURL.replace(/\(|\)|\,|\.|\'/g,'');
+    row.commentURL = row.commentURL.replace(/\-\-/g,'-');
+    row.commentURL = row.commentURL.replace(/\-\-/g,'-');
+    row.commentURL = row.commentURL.replace(/-kt/g,'-komplekt');
+    if(row.numbers.length) {
+      row.number = row.numbers[0].number.replace(/\ /g,'-');
+      row.mName = row.numbers[0].manufacturerFullName.replace(/\ /g,'-');
+
+
+      row.url = `${row.descriptionURL}-${row.commentURL}`;
+      if (row.numbers[0].manufacturerID === 1) {
+        row.url += `-${row.number}-caterpillar`;
+      }  else if (row.numbers[0].manufacturerID === 5) {
+        row.url += `-${row.number}-costex-ctp`;
+      } else {
+        row.url += `-${row.number}-${row.mName}`;
+      }
+
+      for (let i = 1; i < row.numbers.length; i += 1) {
+        row.url += `-${row.numbers[i].number}`;
+      }
+    }
+    // console.log(row.url);
+    callback(row.url);
   }
 
 }
