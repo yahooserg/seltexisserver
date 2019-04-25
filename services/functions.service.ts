@@ -102,7 +102,6 @@ export class MyFunctions {
       row.url += `-${row.commentURL}`;
     }
 
-    console.log(row)
     if(row.numbers.length) {
       row.number = row.numbers[0].number.replace(/\ /g,'-');
       row.mName = row.numbers[0].manufacturerFullName.replace(/\ /g,'-');
