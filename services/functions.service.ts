@@ -102,14 +102,15 @@ export class MyFunctions {
       row.url += `-${row.commentURL}`;
     }
 
+    console.log(row)
     if(row.numbers.length) {
       row.number = row.numbers[0].number.replace(/\ /g,'-');
       row.mName = row.numbers[0].manufacturerFullName.replace(/\ /g,'-');
 
 
-      if (row.numbers[0].manufacturerID === 1) {
+      if (row.numbers[0].manufacturerId === 1) {
         row.url += `-${row.number}-caterpillar`;
-      }  else if (row.numbers[0].manufacturerID === 5) {
+      }  else if (row.numbers[0].manufacturerId === 5) {
         row.url += `-${row.number}-costex-ctp`;
       } else {
         row.url += `-${row.number}-${row.mName}`;
