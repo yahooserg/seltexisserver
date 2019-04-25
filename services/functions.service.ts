@@ -96,12 +96,17 @@ export class MyFunctions {
     row.commentURL = row.commentURL.replace(/\-\-/g,'-');
     row.commentURL = row.commentURL.replace(/\-\-/g,'-');
     row.commentURL = row.commentURL.replace(/-kt/g,'-komplekt');
+
+    row.url = `${row.descriptionURL}`;
+    if (row.commentURL) {
+      row.url += `-${row.commentURL}`;
+    }
+
     if(row.numbers.length) {
       row.number = row.numbers[0].number.replace(/\ /g,'-');
       row.mName = row.numbers[0].manufacturerFullName.replace(/\ /g,'-');
 
 
-      row.url = `${row.descriptionURL}-${row.commentURL}`;
       if (row.numbers[0].manufacturerID === 1) {
         row.url += `-${row.number}-caterpillar`;
       }  else if (row.numbers[0].manufacturerID === 5) {
@@ -114,7 +119,7 @@ export class MyFunctions {
         row.url += `-${row.numbers[i].number}`;
       }
     }
-    // console.log(row.url);
+
     callback(row.url);
   }
 
