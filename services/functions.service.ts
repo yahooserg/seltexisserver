@@ -223,12 +223,12 @@ export class MyFunctions {
     <lastmod>${date}</lastmod>
   </url>
   `;
-    for (let i = 0; i < 3; i += 1) {
+    for (let i = 0; i < data.length; i += 1) {
       finalData += `<url>
     <loc>${data[i]}</loc>
     <lastmod>${date}</lastmod>
   </url>
-    `;
+`;
     }
     finalData += `</urlset>`;
     callback(finalData);
