@@ -615,6 +615,28 @@ export class MySqlService {
     connection.end();
   }
 
+  getSiteMapData(company, callback) {
+    let items = [];
+    // let currentId = 0;
+    let query = `call getSiteMapData(${company})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error', (err)=>{
+        console.log(err);
+      })
+      .on('result', (row) => {
+        row.url = `https://www.seltex.ru/cat/${row.url}`;
+        items[items.length] = row.url;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
   // public priceListCreateStart(company, callback) {
   //   let query = `call priceListCreateStart('${company}')`;
   //   let connection = mysql.createConnection(mySqlConnection);

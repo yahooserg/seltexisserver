@@ -71,5 +71,24 @@ export class MyAWSService {
     });
   }
 
+  public uploadSiteMap(data, callback) {
+
+    s3.putObject({
+      Bucket: 'pricelist.seltex.ru',
+      Key: 'sitemap.xml',
+      Body: data,
+      ACL: 'public-read'
+    },function (err, data) {
+      if (err) {
+        callback(err);
+      }
+      if (data) {
+        // console.log('Successfully uploaded package.');
+        callback("OK")
+
+      }
+    });
+  }
+
 
 }
