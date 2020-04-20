@@ -278,12 +278,18 @@ export class MySqlService {
       .on('result', (row) => {
         if (currentId !== row.id) {
           currentId = row.id;
+          row.description = {
+            text: row.description
+          }
+          row.comment = {
+            text: row.comment
+          }
           items[items.length] = row;
           items[items.length-1].numbers = [];
         }
         items[items.length-1].numbers[items[items.length-1].numbers.length] = {
           number: row.number,
-          manufacturer: row.manufacturerFullName,
+          manufacturerFullName: row.manufacturerFullName,
           manufacturerId: row.manufacturerId
         }
       })
