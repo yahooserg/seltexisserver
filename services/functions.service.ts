@@ -120,6 +120,8 @@ export class MyFunctions {
       }
     }
 
+    row.url = row.url.toLowerCase();
+
     callback(row.url);
   }
 

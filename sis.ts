@@ -107,6 +107,12 @@ app.get('/api/getLast100inventory/company/:company', function(req, res) {
   });
 });
 
+app.get('/api/getinventoryforpermalinks/company/:company', function(req, res) {
+  mySqlService.getInventoryForPermalinks(req.params.company, (items) => {
+    res.send(items);
+  });
+});
+
 app.get('/api/getinventory/company/:company/id/:id', function(req, res) {
   mySqlService.getInventory(req.params.company, req.params.id, (items) => {
     res.send(items);

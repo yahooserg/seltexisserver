@@ -253,7 +253,7 @@ export class MySqlService {
 
   getLast100Inventory(company, callback) {
     let items = [];
-    let query = `SELECT * FROM seltexru.inventory order by id desc limit 100`;
+    let query = `SELECT * FROM seltexru.inventory order by id desc limit 500`;
     let connection = mysql.createConnection(mySqlConnection);
     let request = connection.query(query);
     request
@@ -263,6 +263,33 @@ export class MySqlService {
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure
         // items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  getInventoryForPermalinks(company, callback) {
+    let items = [];
+    let currentId = 0;
+    let query = `call getInventoryForPermalinks(${company})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('result', (row) => {
+        if (currentId !== row.id) {
+          currentId = row.id;
+          items[items.length] = row;
+          items[items.length-1].numbers = [];
+        }
+        items[items.length-1].numbers[items[items.length-1].numbers.length] = {
+          number: row.number,
+          manufacturer: row.manufacturerFullName,
+          manufacturerId: row.manufacturerId
+        }
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
         callback(items);
       });
     connection.end();
@@ -532,7 +559,7 @@ export class MySqlService {
   //     .on('end', () => {
   //       // let's get rid of OkPacket that arrives after stored procedure
   //       items.splice(items.length - 1, 1);
-  //       var buffer = new Buffer(items[0].newImage);
+  //       var buffer = new Buffer.alloc(items[0].newImage);
   //       var bufferBase64 = buffer.toString('binary');
   //       console.log(items[0].newImage.length);
   //
