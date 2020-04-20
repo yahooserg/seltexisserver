@@ -266,15 +266,6 @@ app.post('/api/getrecommendedurlforitem/company/:company/description/:descriptio
 });
 
 app.get('/api/createsitemap', function(req, res) {
-  console.log("hi")
-  // request.get({url: `${myNodeConfig.xlServiceUrl}/api/createxlprice`}, function(err, httpResponse, body){
-  //     if (err) {
-  //     return console.error('upload failed:', err);
-  //   }
-  //   body = JSON.parse(body);
-  //   console.log(body);
-  //   res.send({data: body, res: "OK"});
-  // })
   let company = 1;
   mySqlService.getSiteMapData(company, (priceListData) => {
     myFunctions.getSiteMapData(priceListData, (data)=>{
@@ -282,17 +273,6 @@ app.get('/api/createsitemap', function(req, res) {
         res.send({data: data, res: "OK"});
       });
     });
-    // myXLService.createXLPrice(priceListData, (xlFile)=>{
-    //     myAWSService.uploadPrice(xlFile, ()=>{
-    //       myXLService.createXLCross(priceListData, (xlFileCross)=>{
-    //           myAWSService.uploadCross(xlFileCross, ()=>{
-    //             myAWSService.getPriceUpdateDate((data)=>{
-    //               res.send({data: data, res: "OK"});
-    //             });
-    //           });
-    //       });
-    //     });
-    // });
   });
 });
 

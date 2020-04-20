@@ -221,16 +221,16 @@ export class MyFunctions {
   <url>
     <loc>https://www.seltex.ru/catalog/%D0%BA%D0%BE%D0%BB%D1%8C%D1%86%20%D0%BF%D0%BE%D1%80%D1%88%D0%BD%D1%8F%20CAT</loc>
     <lastmod>${date}</lastmod>
-  </url>
-  `;
+  </url>`;
     for (let i = 0; i < data.length; i += 1) {
-      finalData += `<url>
+      finalData += `
+  <url>
     <loc>${data[i]}</loc>
     <lastmod>${date}</lastmod>
-  </url>
-`;
+  </url>`;
     }
-    finalData += `</urlset>`;
+    finalData += `
+</urlset>`;
     callback(finalData);
 
   }
