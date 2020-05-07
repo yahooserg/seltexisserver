@@ -1,10 +1,10 @@
 ///<reference path="./node_modules/@types/node/index.d.ts"/>
-console.log("app start");
 // import * as express from 'express';
 // import { Application } from 'express';
 // import * as fs from 'fs';
-// import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
-// const myNodeConfig = new MyNodeConfig();
+import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
+const myNodeConfig = new MyNodeConfig();
+console.log(myNodeConfig.serverPort);
 // import { MySqlService } from './services/mysql.service';
 // const mySqlService = new MySqlService();
 // import { MyFileService } from './services/file.service';
