@@ -30,7 +30,9 @@ if (!myNodeConfig.secure) {
   let certificate = fs.readFileSync(`/etc/letsencrypt/live/seltex.ru/fullchain.pem`);
   let credentials = {key: privateKey, cert: certificate};
   const server = https.createServer(credentials, app);
-  server.listen(myNodeConfig.serverPort, () => { });
+  server.listen(myNodeConfig.serverPort, () => {
+    console.info("Run")
+  });
 }
 //////////////////////////////////////////////
 
