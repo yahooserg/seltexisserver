@@ -120,7 +120,7 @@ app.get('/api/getinventory/company/:company/id/:id', function(req, res) {
 });
 
 app.get('/api/searchinventory/company/:company/search/:search', function(req, res) {
-  let search = req.params.search;
+  let search: any = req.params.search;
   search = search.split(' ');
   search = myFunctions.getRidOfEmptyItems(search);
   search = myFunctions.createComplicatedQuery(search);
