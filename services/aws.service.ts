@@ -1,7 +1,7 @@
 /// <reference types="aws-sdk" />
 import {AWSConfig} from '../../seltexisserverconfig/awsconfig';
 const awsConfig = new AWSConfig();
-import * as AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
 AWS.config.update({
     accessKeyId: awsConfig.id,
