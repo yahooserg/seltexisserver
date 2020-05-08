@@ -218,16 +218,13 @@ app.post('/api/updateimage/company/:company', function(req, res) {
 
 });
 
-app.get('/api/createxlprice', function(req, res) {
-  // request.get({url: `${myNodeConfig.xlServiceUrl}/api/createxlprice`}, function(err, httpResponse, body){
-  //     if (err) {
-  //     return console.error('upload failed:', err);
-  //   }
-  //   body = JSON.parse(body);
-  //   console.log(body);
-  //   res.send({data: body, res: "OK"});
-  // })
+app.post('/api/getrecommendedurlforitem/company/:company/description/:description', function(req, res) {
+  myFunctions.getRecommendedUrlForItem(req.body.inventory, (data) => {
+    res.send({text:data});
+  });
+});
 
+app.get('/api/createxlprice', function(req, res) {
   mySqlService.getPriceListData(req.params.company, (priceListData) => {
     myXLService.createXLPrice(priceListData, (xlFile)=>{
         myAWSService.uploadPrice(xlFile, ()=>{
@@ -244,25 +241,9 @@ app.get('/api/createxlprice', function(req, res) {
 });
 
 app.get('/api/getpricelistupdatedate', function(req, res) {
-  // request.get({url: `${myNodeConfig.xlServiceUrl}/api/getpricelistupdatedate`}, function(err, httpResponse, data){
-  //     if (err) {
-  //     return console.error('upload failed:', err);
-  //   }
-  //   data = JSON.parse(data);
-  //   console.log(data);
-  //   res.send(data);
-  // })
   myAWSService.getPriceUpdateDate((data)=>{
     res.send(data);
   });
-});
-
-app.post('/api/getrecommendedurlforitem/company/:company/description/:description', function(req, res) {
-  // console.log(req.body.inventory);
-  myFunctions.getRecommendedUrlForItem(req.body.inventory, (data) => {
-    res.send({text:data});
-  });
-
 });
 
 app.get('/api/createsitemap', function(req, res) {
@@ -275,6 +256,8 @@ app.get('/api/createsitemap', function(req, res) {
     });
   });
 });
+
+
 
 //////////////////////////////////////////////////////////
 // ALL TEMP FUNCS AND APIs:
