@@ -17,8 +17,6 @@ export class MyAWSService {
   }
 
   public getPriceUpdateDate(callback) {
-
-
     s3.headObject({
       Bucket: 'pricelist.seltex.ru',
       Key: 'SeltexPrice.xlsx'
@@ -33,8 +31,6 @@ export class MyAWSService {
   }
 
   public uploadPrice(data, callback) {
-
-
     s3.putObject({
       Bucket: 'pricelist.seltex.ru',
       Key: 'SeltexPrice.xlsx',
@@ -45,15 +41,12 @@ export class MyAWSService {
         callback(err);
       }
       if (data) {
-        // console.log('Successfully uploaded package.');
         callback("OK")
-
       }
     });
   }
 
   public uploadCross(data, callback) {
-
     s3.putObject({
       Bucket: 'pricelist.seltex.ru',
       Key: 'SeltexCross.xlsx',
@@ -64,15 +57,12 @@ export class MyAWSService {
         callback(err);
       }
       if (data) {
-        // console.log('Successfully uploaded package.');
         callback("OK")
-
       }
     });
   }
 
   public uploadSiteMap(data, callback) {
-
     s3.putObject({
       Bucket: 'pricelist.seltex.ru',
       Key: 'sitemap.xml',
@@ -83,9 +73,7 @@ export class MyAWSService {
         callback(err);
       }
       if (data) {
-        // console.log('Successfully uploaded package.');
         callback("OK")
-
       }
     });
   }
