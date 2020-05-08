@@ -12,7 +12,7 @@ import { MyFunctions } from './services/functions.service';
 const myFunctions = new MyFunctions();
 import { MyXLService } from './services/xls.service';
 const myXLService = new MyXLService();
-// import {MyAWSService} from './services/aws.service';
+import {MyAWSService} from './services/aws.service';
 // const myAWSService = new MyAWSService();
 const app: Application = express();
 let bodyParser = require('body-parser');
