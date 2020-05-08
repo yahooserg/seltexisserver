@@ -1,7 +1,7 @@
 /// <reference types="aws-sdk" />
 import {AWSConfig} from '../../seltexisserverconfig/awsconfig';
 const awsConfig = new AWSConfig();
-// const AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
 //
 // AWS.config.update({
 //     accessKeyId: awsConfig.id,
@@ -11,11 +11,11 @@ const awsConfig = new AWSConfig();
 // const s3 = new AWS.S3();
 //
 //
-// export class MyAWSService {
-//
-//   constructor() {
-//
-//   }
+export class MyAWSService {
+
+  constructor() {
+
+  }
 //
 //   public getPriceUpdateDate(callback) {
 //
@@ -92,4 +92,4 @@ const awsConfig = new AWSConfig();
 //   }
 //
 //
-// }
+}
