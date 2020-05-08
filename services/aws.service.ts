@@ -1,5 +1,5 @@
 /// <reference types="aws-sdk" />
-import {AWSConfig} from '../../seltexisserverconfig/awsconfig';
+// import {AWSConfig} from '../../seltexisserverconfig/awsconfig';
 // const awsConfig = new AWSConfig();
 // const AWS = require('aws-sdk');
 //
