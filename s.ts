@@ -2,7 +2,7 @@
 import * as express from 'express';
 import { Application } from 'express';
 import * as fs from 'fs';
-import {MyNodeConfig} from '../seltexisserverconfig/mynodeconfig';
+import { MyNodeConfig } from '../seltexisserverconfig/mynodeconfig';
 const myNodeConfig = new MyNodeConfig();
 import { MySqlService } from './services/mysql.service';
 const mySqlService = new MySqlService();
@@ -12,7 +12,7 @@ import { MyFunctions } from './services/functions.service';
 const myFunctions = new MyFunctions();
 import { MyXLService } from './services/xls.service';
 const myXLService = new MyXLService();
-import {MyAWSService} from './services/aws.service';
+import { MyAWSService } from './services/aws.service';
 // const myAWSService = new MyAWSService();
 const app: Application = express();
 let bodyParser = require('body-parser');
