@@ -59,7 +59,40 @@ app.get('/api/company/exists/:company', function(req, res) {
   });
 });
 
-app.get('/api/logInUser/:email/:password/:companyId', function(req, res) {
+app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res) {
+
+  const data = JSON.stringify({
+    secret: myNodeConfig.recaptchaSecretKey,
+    response: req.params.captcha
+  })
+
+  const options = {
+    hostname: 'https://www.google.com',
+    port: 443,
+    path: '/recaptcha/api/siteverify',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': data.length
+    }
+  }
+
+  const req2 = https.request(options, res2 => {
+    console.log(`statusCode: ${res.statusCode}`)
+
+    res2.on('data', d => {
+      process.stdout.write(d)
+    })
+  })
+
+  req2.on('error', error => {
+    console.error(error)
+  })
+
+  req2.write(data)
+  req2.end()
+
+
   mySqlService.logIn({
     email: req.params.email,
     password: req.params.password,
@@ -208,7 +241,6 @@ app.post('/api/addmanufacturer/company/:company', function(req, res) {
   mySqlService.addManufacturer(req.params.company, req.body.name, req.body.fullName, (items) => {
     res.send(items);
   });
-
 });
 
 app.post('/api/updateimage/company/:company', function(req, res) {
