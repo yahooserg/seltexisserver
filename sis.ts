@@ -78,36 +78,34 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
   }
   const req2 = https.request(options, res2 => {
     // console.log(`statusCode: ${res2.statusCode}`);
-    // console.log(res2);
     res2.on('data', d => {
       // process.stdout.write(d);
-      let a = JSON.parse(d.toString());
-      console.log(a);
-    })
-    res2.on("end", d =>{
-      console.log(`d: ${d}`);
+      let answer = JSON.parse(d.toString());
+      // console.log(a);
+      if (answer.success) {
+        mySqlService.logIn({
+          email: req.params.email,
+          password: req.params.password,
+          companyId: req.params.companyId
+        }, (items, error) => {
+          if (error) {
+            res.send({ status: 'error', error: error });
+          } else {
+            res.send({ status: 'ok', items: items });
+          }
+        });
+      } else {
+        // console.error("my-error ", wrong captcha);
+        res.send({ status: 'error', error: 'wrong input' });
+      }
     })
   })
-
   req2.on('error', error => {
-    console.error("my-error ", error);
-    res.send({ status: 'error', error: error });
+    // console.error("error in https post request: ", error);
+    res.send({ status: 'error', error: "error" });
   })
   req2.write(data)
   req2.end()
-
-
-  mySqlService.logIn({
-    email: req.params.email,
-    password: req.params.password,
-    companyId: req.params.companyId
-  }, (items, error) => {
-    if (error) {
-      res.send({ status: 'error', error: error });
-    } else {
-      res.send({ status: 'ok', items: items });
-    }
-  });
 });
 
 app.get('/api/checkCurrentUser/:userId/:token', function(req, res) {
