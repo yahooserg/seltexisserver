@@ -60,14 +60,11 @@ app.get('/api/company/exists/:company', function(req, res) {
 });
 
 app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res) {
-
   // const data = JSON.stringify({
   //   secret: myNodeConfig.recaptchaSecretKey,
   //   response: req.params.captcha
   // })
   const data: string = `secret=${myNodeConfig.recaptchaSecretKey}&response=${req.params.captcha}`;
-  console.log(data);
-
   const options = {
     hostname: 'www.google.com',
     port: 443,
@@ -79,19 +76,22 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
       'Content-Length': data.length
     }
   }
-
   const req2 = https.request(options, res2 => {
-    console.log(`statusCode: ${res.statusCode}`)
+    console.log(`statusCode: ${res2.statusCode}`);
+    console.log(`statusCode: ${res2}`);
+
 
     res2.on('data', d => {
-      process.stdout.write(d);
+      // process.stdout.write(d);
     })
   })
-
+  req2.on("end", d =>{
+    console.log(`d: ${d}`);
+  })
   req2.on('error', error => {
     console.error("my-error ", error);
+    res.send({ status: 'error', error: error });
   })
-
   req2.write(data)
   req2.end()
 
