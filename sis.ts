@@ -102,7 +102,7 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
   })
   req2.on('error', error => {
     // console.error("error in https post request: ", error);
-    res.send({ status: 'error', error: "error" });
+    res.send({ status: 'error', error: "wrong input" });
   })
   req2.write(data)
   req2.end()
