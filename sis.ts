@@ -77,17 +77,18 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
     }
   }
   const req2 = https.request(options, res2 => {
-    console.log(`statusCode: ${res2.statusCode}`);
-    console.log(res2);
-
-
+    // console.log(`statusCode: ${res2.statusCode}`);
+    // console.log(res2);
     res2.on('data', d => {
       // process.stdout.write(d);
+      let a = JSON.parse(d.toString());
+      console.log(a);
+    })
+    res2.on("end", d =>{
+      console.log(`d: ${d}`);
     })
   })
-  req2.on("end", d =>{
-    console.log(`d: ${d}`);
-  })
+
   req2.on('error', error => {
     console.error("my-error ", error);
     res.send({ status: 'error', error: error });
