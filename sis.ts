@@ -78,7 +78,7 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
   }
   const req2 = https.request(options, res2 => {
     console.log(`statusCode: ${res2.statusCode}`);
-    console.log(`statusCode: ${res2}`);
+    console.log(res2);
 
 
     res2.on('data', d => {
