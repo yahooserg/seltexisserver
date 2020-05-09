@@ -61,10 +61,12 @@ app.get('/api/company/exists/:company', function(req, res) {
 
 app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res) {
 
-  const data = JSON.stringify({
-    secret: myNodeConfig.recaptchaSecretKey,
-    response: req.params.captcha
-  })
+  // const data = JSON.stringify({
+  //   secret: myNodeConfig.recaptchaSecretKey,
+  //   response: req.params.captcha
+  // })
+  const data: string = `secret=${myNodeConfig.recaptchaSecretKey}&response=${req.params.captcha}`;
+  console.log(data);
 
   const options = {
     hostname: 'www.google.com',
@@ -72,7 +74,8 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
     path: '/recaptcha/api/siteverify',
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Content-Type': 'application/json',
       'Content-Length': data.length
     }
   }
