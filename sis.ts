@@ -67,9 +67,9 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
   })
 
   const options = {
-    hostname: 'https://www.google.com/recaptcha/api/siteverify',
-    // port: 443,
-    // path: '',
+    hostname: 'www.google.com',
+    port: 443,
+    path: '/recaptcha/api/siteverify',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -81,12 +81,12 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
     console.log(`statusCode: ${res.statusCode}`)
 
     res2.on('data', d => {
-      process.stdout.write(d)
+      process.stdout.write(d);
     })
   })
 
   req2.on('error', error => {
-    console.error(error)
+    console.error("my-error ", error);
   })
 
   req2.write(data)
