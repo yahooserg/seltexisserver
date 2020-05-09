@@ -67,8 +67,8 @@ app.get('/api/logInUser/:email/:password/:captcha/:companyId', function(req, res
   })
 
   const options = {
-    hostname: 'www.google.com/recaptcha/api/siteverify',
-    port: 443,
+    hostname: 'https://www.google.com/recaptcha/api/siteverify',
+    // port: 443,
     // path: '',
     method: 'POST',
     headers: {
