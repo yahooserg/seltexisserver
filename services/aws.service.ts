@@ -65,7 +65,7 @@ export class MyAWSService {
   public getSiteMapUpdateDate(callback) {
     s3.headObject({
       Bucket: 'pricelist.seltex.ru',
-      Key: 'sitemap.xlsx'
+      Key: 'sitemap.xml'
     },function (err, data) {
       if (err) {
         callback(err);
