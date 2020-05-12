@@ -280,6 +280,12 @@ app.get('/api/getpricelistupdatedate', function(req, res) {
   });
 });
 
+app.get('/api/getsitemapupdatedate', function(req, res) {
+  myAWSService.getSiteMapUpdateDate((data)=>{
+    res.send(data);
+  });
+});
+
 app.get('/api/createsitemap', function(req, res) {
   let company = 1;
   mySqlService.getSiteMapData(company, (priceListData) => {

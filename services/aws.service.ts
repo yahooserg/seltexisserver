@@ -62,6 +62,20 @@ export class MyAWSService {
     });
   }
 
+  public getSiteMapUpdateDate(callback) {
+    s3.headObject({
+      Bucket: 'pricelist.seltex.ru',
+      Key: 'sitemap.xlsx'
+    },function (err, data) {
+      if (err) {
+        callback(err);
+      }
+      if (data) {
+        callback(data)
+      }
+    });
+  }
+
   public uploadSiteMap(data, callback) {
     s3.putObject({
       Bucket: 'pricelist.seltex.ru',
