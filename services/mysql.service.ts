@@ -1,6 +1,6 @@
 import * as mysql from 'mysql';
-import { MySqlConnection } from '../../seltexisserverconfig/dbconnectmysqlnode.js';
-let mySqlConnection = new MySqlConnection;
+import { MySqlConnection } from '../../seltexisserverconfig/dbconnectmysqlnode';
+let mySqlConnection = new MySqlConnection();
 
 export class MySqlService {
 
