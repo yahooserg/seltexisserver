@@ -338,6 +338,73 @@ export class MySqlService {
 
   }
 
+  getImagesList(id, callback) {
+    let items: any = [];
+    let query: string = `call getImagesList(${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error',(err)=>{
+        // console.log(err);
+        items = {'error':err};
+        // callback({'error':err});
+      })
+      .on('result', (row) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items);
+      });
+    connection.end();
+  }
+
+  saveNewImage(id, callback) {
+    let items: any = [];
+    let query: string = `call saveNewImage(${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error',(err)=>{
+        // console.log(err);
+        items = {'error':err};
+        // callback({'error':err});
+      })
+      .on('result', (row) => {
+        items[items.length] = row;
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items[0]);
+      });
+    connection.end();
+  }
+
+  deleteImage(id, callback) {
+    let items: any = [];
+    let query: string = `call deleteInventoryImage(${id})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error',(err)=>{
+        // console.log(err);
+        items = {'error':err};
+        // callback({'error':err});
+      })
+      .on('result', (row) => {
+        items[items.length] = row;
+        console.log(items);
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items[0].result);
+      });
+    connection.end();
+  }
+
   searchInventory(query, callback) {
     let items: any = [];
     let connection = mysql.createConnection(mySqlConnection);

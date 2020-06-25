@@ -19,6 +19,8 @@ let bodyParser = require('body-parser');
 // import * as request from 'request';
 import * as http from 'http';
 import * as https from 'https';
+import { isAbsolute } from 'path';
+import { isArray } from 'util';
 
 //////////////////////////////////////////////////
 ////////// http/https secure or not block
@@ -170,11 +172,98 @@ app.get('/api/getinventorynumbers/company/:company/id/:id', function(req, res) {
   });
 });
 
+//////////////////////
+/// IMAGES APIs
+//////////////////////
 app.get('/api/getinventoryimage/company/:company/id/:id', function(req, res) {
   myFileService.getInventoryImage(req.params.company, req.params.id, (items) => {
     res.send(items);
   });
 });
+
+app.get('/api/getinventoryimages/:company/:id', function(req, res) {
+  mySqlService.getImagesList(req.params.id, images => {
+    if (images.length) {
+      let count = 0;
+      for (let i = 0; i < images.length; i += 1) {
+        // console.log(images[i]);
+        let fileName = `${req.params.company}-${req.params.id}-${images[i].id}`;
+        // console.log(fileName);
+        myFileService.getInventoryImage(fileName, i, (items, index) => {
+          images[index].image = items.image;
+          images[index].fileName = fileName;
+          count += 1;
+          if (count === images.length) {
+            res.send(images);
+          }
+        });
+      }
+    } else {
+      res.send(images);
+      // images[0] = {};
+      // let fileName = `nophoto`;
+      // myFileService.getInventoryImage(fileName, 0, (items, index) => {
+      //   images[index].image = items.image;
+      //   images[index].fileName = fileName;
+      //   res.send(images);
+      // });
+    }
+
+  });
+
+});
+
+app.post('/api/updateimage/company/:company', function(req, res) {
+  myFileService.updateImage(req.params.company, req.body.image, req.body.partId, (items) => {
+    res.send(items);
+  });
+});
+
+app.post('/api/savenewimage/company/:company', function(req, res) {
+  // console.log(req.body.image);
+  // res.send({res: "OK"});
+  
+  mySqlService.saveNewImage(req.body.partId, (items) => {
+    let fileName = `${req.params.company}-${req.body.partId}-${items.id}`;
+    // console.log(fileName);
+    // res.send({res: "OK"});
+    myFileService.saveImage(fileName, req.body.image, (fsRes) => {
+      if (fsRes.error) {
+        res.send(fsRes);
+      } else {
+        res.send({id: items.id, fileName: fileName, inventoryId: req.body.partId, main: items.main});
+      }
+    });
+  });
+});
+
+app.delete('/api/deleteimage/:company/:partid/:imageid', function(req, res) {
+  let fileName = `${req.params.company}-${req.params.partid}-${req.params.imageid}`;
+  let count: number = 0;
+  myFileService.deleteImage(fileName,(response) => {
+      if(response.error) {
+        res.send({error: "coul'd not delete file"});
+      } else {
+        if(count) {
+          res.send({result: "ok"});
+        } else {
+          count += 1;
+        }
+      }
+  });
+  mySqlService.deleteImage(req.params.imageid, (items) => {
+    if(count) {
+      res.send({result: "okay"});
+    } else {
+      count += 1;
+    }
+  });  
+});
+
+//////////////////////
+/// END - IMAGES APIs
+//////////////////////
+
 
 app.put('/api/updateinventorynumber/company/:company/numberid/:numberid/newManufacturer/:newmanufacturer', function(req, res) {
   mySqlService.updateInventoryNumber(req.params.company, req.params.numberid, req.body.newNumber, req.params.newmanufacturer, (items) => {
@@ -243,13 +332,6 @@ app.post('/api/addmanufacturer/company/:company', function(req, res) {
   mySqlService.addManufacturer(req.params.company, req.body.name, req.body.fullName, (items) => {
     res.send(items);
   });
-});
-
-app.post('/api/updateimage/company/:company', function(req, res) {
-  myFileService.updateImage(req.params.company, req.body.image, req.body.partId, (items) => {
-    res.send(items);
-  });
-
 });
 
 app.post('/api/getrecommendedurlforitem/company/:company/description/:description', function(req, res) {
