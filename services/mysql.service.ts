@@ -395,7 +395,30 @@ export class MySqlService {
       })
       .on('result', (row) => {
         items[items.length] = row;
-        console.log(items);
+        // console.log(items);
+      })
+      .on('end', () => {
+        // let's get rid of OkPacket that arrives after stored procedure
+        items.splice(items.length - 1, 1);
+        callback(items[0].result);
+      });
+    connection.end();
+  }
+
+  updateInventoryMainImage(id, partId, callback) {
+    let items: any = [];
+    let query: string = `call updateInventoryMainImage(${id}, ${partId})`;
+    let connection = mysql.createConnection(mySqlConnection);
+    let request = connection.query(query);
+    request
+      .on('error',(err)=>{
+        // console.log(err);
+        items = {'error':err};
+        // callback({'error':err});
+      })
+      .on('result', (row) => {
+        items[items.length] = row;
+        // console.log(items);
       })
       .on('end', () => {
         // let's get rid of OkPacket that arrives after stored procedure

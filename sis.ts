@@ -219,7 +219,7 @@ app.post('/api/updateimage/company/:company', function(req, res) {
   });
 });
 
-app.post('/api/savenewimage/company/:company', function(req, res) {
+app.put('/api/savenewimage/company/:company', function(req, res) {
   // console.log(req.body.image);
   // res.send({res: "OK"});
   
@@ -258,6 +258,14 @@ app.delete('/api/deleteimage/:company/:partid/:imageid', function(req, res) {
       count += 1;
     }
   });  
+});
+
+app.post('/api/updateinventorymainimage/:company/:partid/:imageid', function(req, res) {
+    // res.send({res: "OK"});
+  mySqlService.updateInventoryMainImage(req.params.imageid, req.params.partid, (items) => {
+    // console.log(fileName);
+    res.send({res: "OK", items:items});
+  });
 });
 
 //////////////////////
