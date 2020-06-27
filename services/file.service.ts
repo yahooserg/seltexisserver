@@ -27,6 +27,8 @@ export class MyFileService {
     file = `${__dirname}/${fsConfig.workDir}${file}.png`;
     image = image.replace(/^data:;base64,/, "");
     image = image.replace(/^data:application\/octet-stream;base64,/, "");
+    image = image.replace(/^data:image\/png;base64,/, "");
+    image = image.replace(/^data:image\/jpeg;base64,/, "");
     image = Buffer.from(image, 'base64')
     // console.log('img: ',image);
     fs.writeFile(file, image, (err) => {
@@ -40,7 +42,7 @@ export class MyFileService {
 
   public deleteImage(file, callback) {
     file = `${__dirname}/${fsConfig.workDir}${file}.png`;
-    console.log(file);
+    // console.log(file);
     fs.unlink(file, (err) => {
       if (err) {
         console.log(err);
