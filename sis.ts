@@ -166,6 +166,17 @@ app.get('/api/searchinventory/company/:company/search/:search', function(req, re
   });
 });
 
+app.get('/api/searchinventoryforquote/company/:company/search/:search', function(req, res) {
+  console.log("here")
+  let search: any = req.params.search;
+  search = search.split(' ');
+  search = myFunctions.getRidOfEmptyItems(search);
+  search = myFunctions.createComplicatedQueryForQuote(search);
+  mySqlService.searchInventoryForQuote(search, (items) => {
+    res.send(items);
+  });
+});
+
 app.get('/api/getinventorynumbers/company/:company/id/:id', function(req, res) {
   mySqlService.getInventoryNumbers(req.params.company, req.params.id, (items) => {
     res.send(items);
